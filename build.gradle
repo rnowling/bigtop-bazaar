@@ -2,7 +2,7 @@ apply plugin: 'eclipse'
 apply plugin: 'groovy'
 apply plugin: 'java' 
 
-group = 'org.bigtop.bazaar.datagenerator'
+group = 'org.apache.bigtop.bazaar.datagenerator'
 version = '0.9.0-SNAPSHOT'
 
 jar {
@@ -15,7 +15,7 @@ jar {
 
     manifest {
 	attributes 'Title': 'BigTop Bazaar Data Generator', 'Version': version
-	attributes 'Main-Class': 'org.bigtop.bazaar.datagenerator.cli.Driver'
+	attributes 'Main-Class': 'org.apache.bigtop.bazaar.datagenerator.cli.Driver'
     }
 }
 
