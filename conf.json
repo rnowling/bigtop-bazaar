@@ -1,0 +1,25 @@
+{ 
+    "steps" : 20000,
+    "timestep" : 0.1,
+    "temperature" : 10.0,
+    "damping": 2.0,
+    "numberParticles": 10,
+    "particleMass": 2.0,
+    "positionfile": "positions.xyz",
+    "velocityfile": "velocities.xyz",
+    "outputPeriod": 100,
+    "boundaryRadius": 10,
+    "boundaryStrength": 1,
+    "Booths": [
+	{"PositionX": 4.0,
+	 "PositionY": 4.0,
+	 "Radius": 1.0,
+	 "Strength": 2.0
+	 },
+	{"PositionX": -3.0,
+	 "PositionY": -2.0,
+	 "Radius": 1.0,
+	 "Strength": 2.0
+	 }
+	]
+}
