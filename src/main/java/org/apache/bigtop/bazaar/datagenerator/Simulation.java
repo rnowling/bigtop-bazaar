@@ -13,12 +13,11 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.apache.bigtop.bazaar.datagenerator.cli;
+package org.apache.bigtop.bazaar.datagenerator;
 
 import org.apache.bigtop.bazaar.datagenerator.base.SimulationState;
 import org.apache.bigtop.bazaar.datagenerator.base.Topology;
 import org.apache.bigtop.bazaar.datagenerator.base.Vec2D;
-import org.apache.bigtop.bazaar.datagenerator.base.VelocitySampler;
 import org.apache.bigtop.bazaar.datagenerator.integrators.Integrator;
 
 public class Simulation
@@ -26,26 +25,28 @@ public class Simulation
 	Topology topology;
 	Integrator integrator;
 	SimulationState currentState;
-	VelocitySampler velocitySampler;
 	
-	public Simulation(Topology topology, Integrator integrator, VelocitySampler velocitySampler)
+	public Simulation(Topology topology, Integrator integrator)
 	{
 		this.topology = topology;
 		this.integrator = integrator;
-		this.velocitySampler = velocitySampler;
 		
 		initializeSimulationState();
 	}
 	
 	protected void initializeSimulationState()
 	{
-		currentState = new SimulationState();
+		currentState = new SimulationState(topology.getNumberParticles());
 		currentState.setTime(0.0);
 		currentState.setPotentialEnergy(0.0);
 		currentState.setKineticEnergy(0.0);
-		currentState.setVelocities(velocitySampler.sample(topology));
-		currentState.setPositions(topology.getInitialPositions());
-		currentState.setForces(new Vec2D[topology.getNumberParticles()]);
+		
+		for(int i = 0; i < topology.getNumberParticles(); i++)
+		{
+			currentState.setVelocities(i, topology.getInitialVelocities(i));
+			currentState.setPositions(i, topology.getInitialPositions(i));
+			currentState.setForces(i, new Vec2D(0.0, 0.0));
+		}
 	}
 	
 	public SimulationState step()

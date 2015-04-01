@@ -17,12 +17,26 @@ package org.apache.bigtop.bazaar.datagenerator.base;
 
 public class SimulationState
 {
+	int numberParticles;
 	double time;
 	Vec2D[] positions;
 	Vec2D[] velocities;
 	Vec2D[] forces;
 	double kineticEnergy;
 	double potentialEnergy;
+	
+	public SimulationState(int nParticles)
+	{
+		this.numberParticles = nParticles;
+		positions = new Vec2D[nParticles];
+		velocities = new Vec2D[nParticles];
+		forces = new Vec2D[nParticles];
+	}
+	
+	public int getNumberParticles()
+	{
+		return this.numberParticles;
+	}
 	
 	public double getTime()
 	{
@@ -34,34 +48,34 @@ public class SimulationState
 		this.time = time;
 	}
 	
-	public Vec2D[] getPositions()
+	public Vec2D getPositions(int particle)
 	{
-		return positions;
+		return positions[particle];
 	}
 	
-	public void setPositions(Vec2D[] positions)
+	public void setPositions(int particle, Vec2D positions)
 	{
-		this.positions = positions;
+		this.positions[particle] = positions;
 	}
 	
-	public Vec2D[] getVelocities()
+	public Vec2D getVelocities(int particle)
 	{
-		return velocities;
+		return velocities[particle];
 	}
 	
-	public void setVelocities(Vec2D[] velocities)
+	public void setVelocities(int particle, Vec2D velocities)
 	{
-		this.velocities = velocities;
+		this.velocities[particle] = velocities;
 	}
 	
-	public Vec2D[] getForces()
+	public Vec2D getForces(int particle)
 	{
-		return forces;
+		return forces[particle];
 	}
 	
-	public void setForces(Vec2D[] forces)
+	public void setForces(int particle, Vec2D forces)
 	{
-		this.forces = forces;
+		this.forces[particle] = forces;
 	}
 	
 	public double getKineticEnergy()

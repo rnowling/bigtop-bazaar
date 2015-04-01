@@ -27,19 +27,17 @@ public class VelocitySampler
 		this.rng = rng;
 	}
 	
-	public Vec2D[] sample(Topology topology)
+	public void sample(Topology topology)
 	{
 		double kBT = Constants.BOLTZMANN * topology.getTemperature();
 		
-		Vec2D[] velocities = new Vec2D[topology.getNumberParticles()];
 		for(int i = 0; i < topology.getNumberParticles(); i++)
 		{
-			double kBTOverM = Math.sqrt(kBT / topology.getParticleMasses()[i]);
+			double kBTOverM = Math.sqrt(kBT / topology.getParticleMass(i));
 			
-			velocities[i] = new Vec2D(rng.nextGaussian() * kBTOverM,
+			Vec2D velocities = new Vec2D(rng.nextGaussian() * kBTOverM,
 					rng.nextGaussian() * kBTOverM);
+			topology.setInitialVelocities(i, velocities);
 		}
-		
-		return velocities;
 	}
 }

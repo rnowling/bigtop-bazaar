@@ -17,12 +17,39 @@ package org.apache.bigtop.bazaar.datagenerator.integrators;
 
 import org.apache.bigtop.bazaar.datagenerator.base.SimulationState;
 
-public class DummyIntegrator implements Integrator
+public class LangevinLeapfrogIntegrator implements Integrator
 {
-
+	double timestep;
+	double temperature;
+	double gamma;
+	
+	/**
+	 * Langevin Leapfrog integrator for the Langevin stochastic differential
+	 * equation.
+	 * 
+	 * @param timestep Timestep in units of ps
+	 * @param temperature Temperature in units of K
+	 * @param gamma Damping in units of 1/ps
+	 */
+	public LangevinLeapfrogIntegrator(double timestep, double temperature, double gamma)
+	{
+		this.timestep = timestep;
+		this.temperature = temperature;
+		this.gamma = gamma;
+	}
+	
 	@Override
 	public SimulationState integrate(SimulationState state)
-	{
+	{	
+		double kineticEnergy = 0.0;
+		for(int i = 0; i < state.getNumberParticles(); i++)
+		{
+			kineticEnergy += 0.5 * state.getVelocities(i).squaredNorm();
+		}
+		
+		state.setKineticEnergy(kineticEnergy);
+		state.setTime(state.getTime() + timestep);
+		
 		return state;
 	}
 

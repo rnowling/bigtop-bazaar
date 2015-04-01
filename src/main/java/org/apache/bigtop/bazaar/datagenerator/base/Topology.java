@@ -15,13 +15,65 @@
  */
 package org.apache.bigtop.bazaar.datagenerator.base;
 
-public interface Topology
+public class Topology
 {
-	public abstract int getNumberParticles();
-
-	public abstract double[] getParticleMasses();
-
-	public abstract double getTemperature();
+	int numberParticles;
+	double temperature;
+	double[] particleMasses;
+	Vec2D[] initialPositions;
+	Vec2D[] initialVelocities;
 	
-	public abstract Vec2D[] getInitialPositions();
+	public Topology(int numberParticles, double temperature)
+	{
+		this.numberParticles = numberParticles;
+		this.temperature = temperature;
+		this.particleMasses = new double[numberParticles];
+		this.initialPositions = new Vec2D[numberParticles];
+		this.initialVelocities = new Vec2D[numberParticles];
+	}
+	
+	public int getNumberParticles()
+	{
+		return numberParticles;
+	}
+	
+	public double getParticleMass(int particle)
+	{
+		return particleMasses[particle];
+	}
+	
+	public void setParticleMass(int particle, double particleMass)
+	{
+		this.particleMasses[particle] = particleMass;
+	}
+
+	public double getTemperature()
+	{
+		return temperature;
+	}
+
+	public void setTemperature(double temperature)
+	{
+		this.temperature = temperature;
+	}
+
+	public Vec2D getInitialPositions(int particle)
+	{
+		return initialPositions[particle];
+	}
+
+	public void setInitialPositions(int particle, Vec2D positions)
+	{
+		this.initialPositions[particle] = positions;
+	}
+	
+	public Vec2D getInitialVelocities(int particle)
+	{
+		return initialVelocities[particle];
+	}
+
+	public void setInitialVelocities(int particle, Vec2D velocities)
+	{
+		this.initialVelocities[particle] = velocities;
+	}
 }
