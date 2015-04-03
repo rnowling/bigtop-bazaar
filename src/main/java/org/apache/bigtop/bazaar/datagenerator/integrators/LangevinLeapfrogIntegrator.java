@@ -83,7 +83,7 @@ public class LangevinLeapfrogIntegrator implements Integrator
 			Vec2D[] nextForces = potentials[i].getForces();
 			for(int j = 0; j < nextForces.length; j++)
 			{
-				forces[j] = forces[i].add(nextForces[j]);
+				forces[j] = forces[j].add(nextForces[j]);
 			}
 		}
 		
