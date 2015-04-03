@@ -21,6 +21,7 @@ public class SphericalBoundaryConditions implements Potential
 	public void update(Vec2D[] positions)
 	{
 		totalEnergy = 0.0;
+		forces = new Vec2D[positions.length];
 		
 		for(int i = 0; i < positions.length; i++)
 		{

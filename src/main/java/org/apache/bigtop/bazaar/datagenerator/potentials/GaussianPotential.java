@@ -15,12 +15,14 @@ public class GaussianPotential implements Potential
 		// use 3 std devs distance
 		variance = (radius / 3.0) * (radius  / 3.0);
 		scale = centerPE;
+		this.center = center;
 	}
 	
 	@Override
 	public void update(Vec2D[] positions)
 	{
 		totalEnergy = 0.0;
+		forces = new Vec2D[positions.length];
 		
 		// -1.0 b/c we want it rotated 180 degrees
 		// scale because we want to control height
