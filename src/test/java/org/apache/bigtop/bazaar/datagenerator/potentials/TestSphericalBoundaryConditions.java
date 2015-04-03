@@ -38,9 +38,14 @@ public class TestSphericalBoundaryConditions
 		Potential potential = new SphericalBoundaryConditions(center, radius, strength);
 		potential.update(new Vec2D[]{center});
 		final double observedPE = potential.getEnergy();
+		final Vec2D observedForces = potential.getForces()[0];
 		
 		assertEquals("Observed PE: " + observedPE + ", expected PE: " + expectedPE,
 				expectedPE, observedPE, EPS);
+		
+		Vec2D expectedForces = new Vec2D(0.0, 0.0);
+		double forceDist = expectedForces.distance(observedForces);
+		assertEquals("Observed force diff: " + forceDist, 0.0, forceDist, EPS);
 	}
 	
 	@Test
@@ -73,9 +78,11 @@ public class TestSphericalBoundaryConditions
 		Potential potential = new SphericalBoundaryConditions(center, radius, strength);
 		potential.update(new Vec2D[]{particleLocation});
 		final double observedPE = potential.getEnergy();
+		final Vec2D observedForces = potential.getForces()[0];
 		
 		
 		assertTrue("Observed PE: " + observedPE, observedPE > 0.0);
+		assertTrue("Observed force: " + observedForces.getX(), observedForces.getX() < 0.0);
 	}
 }
 
