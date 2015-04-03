@@ -25,11 +25,12 @@ public class GaussianPotential implements Potential
 	Vec2D[] forces;
 	double totalEnergy;
 	
-	public GaussianPotential(Vec2D center,double radius, double centerPE)
+	public GaussianPotential(Vec2D center, double radius, double strength)
 	{
 		// use 3 std devs distance
 		variance = (radius / 3.0) * (radius  / 3.0);
-		scale = centerPE;
+		// set height exactly to strength
+		scale = strength * Math.sqrt(2.0 * Math.PI * variance);
 		this.center = center;
 	}
 	
@@ -41,7 +42,7 @@ public class GaussianPotential implements Potential
 		
 		// -1.0 b/c we want it rotated 180 degrees
 		// scale because we want to control height
-		double constant = -1.0 * scale;
+		double constant = -1.0 * scale / Math.sqrt(2.0 * Math.PI * variance);
 		
 		for(int i = 0; i < positions.length; i++)
 		{
