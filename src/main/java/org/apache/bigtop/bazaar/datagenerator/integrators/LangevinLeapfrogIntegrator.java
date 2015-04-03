@@ -95,7 +95,7 @@ public class LangevinLeapfrogIntegrator implements Integrator
 		double kineticEnergy = 0.0;
 		for(int i = 0; i < velocities.length; i++)
 		{
-			kineticEnergy += 0.5 * velocities[i].squaredNorm();
+			kineticEnergy += 0.5 * masses[i] * velocities[i].squaredNorm();
 		}
 		
 		return kineticEnergy;
