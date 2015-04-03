@@ -65,6 +65,7 @@ public class ParticleSimulation
 				configuration.getBoundaryRadius(),
 				configuration.getBoundaryStrength());
 		
+		
 		for(int i = 1; i < booths.size() + 1; i++)
 		{
 			Booth booth = booths.get(i - 1);
