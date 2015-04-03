@@ -24,6 +24,7 @@ public class SimulationState
 	Vec2D[] forces;
 	double kineticEnergy;
 	double potentialEnergy;
+	long step;
 	
 	public SimulationState(int nParticles)
 	{
@@ -48,34 +49,34 @@ public class SimulationState
 		this.time = time;
 	}
 	
-	public Vec2D getPositions(int particle)
+	public Vec2D[] getPositions()
 	{
-		return positions[particle];
+		return positions;
 	}
 	
-	public void setPositions(int particle, Vec2D positions)
+	public void setPositions(Vec2D[] positions)
 	{
-		this.positions[particle] = positions;
+		this.positions = positions;
 	}
 	
-	public Vec2D getVelocities(int particle)
+	public Vec2D[] getVelocities()
 	{
-		return velocities[particle];
+		return velocities;
 	}
 	
-	public void setVelocities(int particle, Vec2D velocities)
+	public void setVelocities(Vec2D[] velocities)
 	{
-		this.velocities[particle] = velocities;
+		this.velocities = velocities;
 	}
 	
-	public Vec2D getForces(int particle)
+	public Vec2D[] getForces(int particle)
 	{
-		return forces[particle];
+		return forces;
 	}
 	
-	public void setForces(int particle, Vec2D forces)
+	public void setForces(Vec2D[] forces)
 	{
-		this.forces[particle] = forces;
+		this.forces = forces;
 	}
 	
 	public double getKineticEnergy()
@@ -96,5 +97,15 @@ public class SimulationState
 	public void setPotentialEnergy(double potentialEnergy)
 	{
 		this.potentialEnergy = potentialEnergy;
+	}
+
+	public long getStep()
+	{
+		return step;
+	}
+
+	public void setStep(long step)
+	{
+		this.step = step;
 	}
 }

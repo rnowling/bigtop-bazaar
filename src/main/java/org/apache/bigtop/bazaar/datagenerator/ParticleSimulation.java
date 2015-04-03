@@ -15,6 +15,7 @@
  */
 package org.apache.bigtop.bazaar.datagenerator;
 
+import java.util.Arrays;
 import java.util.Random;
 
 import org.apache.bigtop.bazaar.datagenerator.base.SimulationState;
@@ -23,6 +24,7 @@ import org.apache.bigtop.bazaar.datagenerator.base.VelocitySampler;
 import org.apache.bigtop.bazaar.datagenerator.configuration.Configuration;
 import org.apache.bigtop.bazaar.datagenerator.integrators.Integrator;
 import org.apache.bigtop.bazaar.datagenerator.integrators.LangevinLeapfrogIntegrator;
+import org.apache.bigtop.bazaar.datagenerator.potentials.Potential;
 
 public class ParticleSimulation
 {
@@ -47,8 +49,11 @@ public class ParticleSimulation
 	
 	protected void buildIntegrator()
 	{
+		double[] masses = new double[configuration.getNumberParticles()];
+		Arrays.fill(masses, configuration.getParticleMass());
 		integrator = new LangevinLeapfrogIntegrator(configuration.getTimestep(),
-				configuration.getTemperature(), configuration.getDamping());
+				configuration.getTemperature(), configuration.getDamping(),
+				masses, new Potential[] {}, rng);
 	}
 	
 	protected void buildSimulationState()
@@ -61,12 +66,19 @@ public class ParticleSimulation
 		VelocitySampler velocitySampler = new VelocitySampler(configuration.getTemperature(),
 				configuration.getParticleMass(), rng);
 		
+		Vec2D[] velocities = new Vec2D[configuration.getNumberParticles()];
+		Vec2D[] positions = new Vec2D[configuration.getNumberParticles()];
+		Vec2D[] forces = new Vec2D[configuration.getNumberParticles()];
 		for(int i = 0; i < configuration.getNumberParticles(); i++)
 		{
-			currentState.setVelocities(i, velocitySampler.sample());
-			currentState.setPositions(i, new Vec2D(0.0, 0.0));
-			currentState.setForces(i, new Vec2D(0.0, 0.0));
+			velocities[i] = velocitySampler.sample();
+			positions[i] = new Vec2D(0.0, 0.0);
+			forces[i] = new Vec2D(0.0, 0.0);
 		}
+		
+		currentState.setForces(forces);
+		currentState.setPositions(positions);
+		currentState.setVelocities(velocities);
 	}
 	
 	public SimulationState step()
