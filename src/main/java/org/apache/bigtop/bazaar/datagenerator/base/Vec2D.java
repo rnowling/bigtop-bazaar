@@ -56,4 +56,14 @@ public class Vec2D
 		Vec2D diff = this.sub(other);
 		return diff.norm();
 	}
+	
+	public double getX()
+	{
+		return x;
+	}
+	
+	public double getY()
+	{
+		return y;
+	}
 }
