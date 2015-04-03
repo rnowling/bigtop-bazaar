@@ -43,6 +43,25 @@ public class TestGaussianPotential
 		assertEquals("Observed PE: " + observedPE + ", expected PE: " + expectedPE + ", percent error: " + percentError,
 				0.0, percentError, EPS);
 	}
+	
+	@Test
+	public void testForces()
+	{
+		final double radius = 3.0;
+		final double strength = 2.0;
+		final Vec2D center = new Vec2D(0.0, 0.0);
+		
+		final Vec2D expectedForces = new Vec2D(0.0, 0.0);
+		
+		GaussianPotential potential = new GaussianPotential(center, radius, strength);
+		potential.update(new Vec2D[]{center});
+		final Vec2D observedForces = potential.getForces()[0];
+		
+		double forceDiff = expectedForces.sub(observedForces).norm();
+		double expectedForceDiff = 0.0;
+		assertEquals("Observed Force Diff: " + forceDiff + ", expected Force Diff: " + expectedForceDiff,
+				expectedForceDiff, forceDiff, EPS);
+	}
 }
 
 
