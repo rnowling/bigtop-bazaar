@@ -17,25 +17,135 @@ package org.apache.bigtop.bazaar.datagenerator.configuration;
 
 import java.util.Vector;
 
-public interface Configuration
+
+public class Configuration
 {
+	long steps;
+	double timestep;
+	double temperature;
+	double damping;
+	int numberParticles;
+	double boundaryRadius;
+	double boundaryStrength;
+	double particleMass;
+	Vector<Booth> booths;
+	
+	public Configuration()
+	{
+		this.booths = new Vector<Booth>();
+	}
 
-	public abstract int getNumberParticles();
+	public void setSteps(long steps)
+	{
+		this.steps = steps;
+	}
 
-	public abstract long getSteps();
+	public void setTimestep(double timestep)
+	{
+		this.timestep = timestep;
+	}
 
-	public abstract double getTimestep();
+	public void setTemperature(double temperature)
+	{
+		this.temperature = temperature;
+	}
 
-	public abstract double getTemperature();
+	public void setDamping(double damping)
+	{
+		this.damping = damping;
+	}
 
-	public abstract double getDamping();
+	public void setNumberParticles(int numberParticles)
+	{
+		this.numberParticles = numberParticles;
+	}
 
-	public abstract double getBoundaryRadius();
+	public void setBoundaryRadius(double boundaryRadius)
+	{
+		this.boundaryRadius = boundaryRadius;
+	}
 
-	public abstract double getBoundaryStrength();
+	public void setBoundaryStrength(double boundaryStrength)
+	{
+		this.boundaryStrength = boundaryStrength;
+	}
 
-	public abstract double getParticleMass();
+	public void setParticleMass(double particleMass)
+	{
+		this.particleMass = particleMass;
+	}
+	
+	public void addBooth(Booth booth)
+	{
+		this.booths.add(booth);
+	}
 
-	public abstract Vector<Booth> getBooths();
+	public int getNumberParticles()
+	{
+		return numberParticles;
+	}
 
+	public long getSteps()
+	{
+		return steps;
+	}
+	
+	public double getTimestep()
+	{
+		return timestep;
+	}
+	
+	public double getTemperature()
+	{
+		return temperature;
+	}
+	
+	public double getDamping()
+	{
+		return damping;
+	}
+	
+	public double getBoundaryRadius()
+	{
+		return boundaryRadius;
+	}
+	
+	public double getBoundaryStrength()
+	{
+		return boundaryStrength;
+	}
+	
+	public double getParticleMass()
+	{
+		return particleMass;
+	}
+	
+
+	public Vector<Booth> getBooths()
+	{
+		return booths;
+	}
+	
+	public String toString()
+	{
+		String str = "steps: " + steps + "\n" +
+				"timestep: " + timestep + "\n" +
+				"temperature: " + temperature + "\n" +
+				"damping: " + damping + "\n" +
+				"particle mass: " + particleMass + "\n" +
+				"number of particles: " + numberParticles + "\n" +
+				"boundary radius: " + boundaryRadius + "\n" +
+				"boundary strength: " + boundaryStrength + "\n" +
+				"booths: \n";
+		
+		if(booths != null)
+		{
+			for(Booth booth : booths)
+			{
+				str += "\t " + booth.toString() + "\n";
+			}
+		}
+		
+		return str;
+	}
 }

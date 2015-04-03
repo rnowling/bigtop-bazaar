@@ -69,7 +69,7 @@ public class ConfigurationReader
 	{
 		Map<String, Object> jsonConfiguration = (Map<String, Object>) tree;
 		
-		ConfigurationImpl config = new ConfigurationImpl();
+		Configuration config = new Configuration();
 		
 		for(Map.Entry<String, Object> entry : jsonConfiguration.entrySet())
 		{

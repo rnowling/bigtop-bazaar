@@ -15,36 +15,56 @@
  */
 package org.apache.bigtop.bazaar.datagenerator;
 
-import org.apache.bigtop.bazaar.datagenerator.base.SimulationState;
-import org.apache.bigtop.bazaar.datagenerator.base.Topology;
-import org.apache.bigtop.bazaar.datagenerator.base.Vec2D;
-import org.apache.bigtop.bazaar.datagenerator.integrators.Integrator;
+import java.util.Random;
 
-public class Simulation
+import org.apache.bigtop.bazaar.datagenerator.base.SimulationState;
+import org.apache.bigtop.bazaar.datagenerator.base.Vec2D;
+import org.apache.bigtop.bazaar.datagenerator.base.VelocitySampler;
+import org.apache.bigtop.bazaar.datagenerator.configuration.Configuration;
+import org.apache.bigtop.bazaar.datagenerator.integrators.Integrator;
+import org.apache.bigtop.bazaar.datagenerator.integrators.LangevinLeapfrogIntegrator;
+
+public class ParticleSimulation
 {
-	Topology topology;
 	Integrator integrator;
 	SimulationState currentState;
+	Configuration configuration;
+	Random rng;
 	
-	public Simulation(Topology topology, Integrator integrator)
+	public ParticleSimulation(Configuration configuration, Random rng)
 	{
-		this.topology = topology;
-		this.integrator = integrator;
+		this.configuration = configuration;
+		this.rng = rng;
 		
-		initializeSimulationState();
+		initialize();
 	}
 	
-	protected void initializeSimulationState()
+	protected void initialize()
 	{
-		currentState = new SimulationState(topology.getNumberParticles());
+		buildSimulationState();
+		buildIntegrator();
+	}
+	
+	protected void buildIntegrator()
+	{
+		integrator = new LangevinLeapfrogIntegrator(configuration.getTimestep(),
+				configuration.getTemperature(), configuration.getDamping());
+	}
+	
+	protected void buildSimulationState()
+	{
+		currentState = new SimulationState(configuration.getNumberParticles());
 		currentState.setTime(0.0);
 		currentState.setPotentialEnergy(0.0);
 		currentState.setKineticEnergy(0.0);
 		
-		for(int i = 0; i < topology.getNumberParticles(); i++)
+		VelocitySampler velocitySampler = new VelocitySampler(configuration.getTemperature(),
+				configuration.getParticleMass(), rng);
+		
+		for(int i = 0; i < configuration.getNumberParticles(); i++)
 		{
-			currentState.setVelocities(i, topology.getInitialVelocities(i));
-			currentState.setPositions(i, topology.getInitialPositions(i));
+			currentState.setVelocities(i, velocitySampler.sample());
+			currentState.setPositions(i, new Vec2D(0.0, 0.0));
 			currentState.setForces(i, new Vec2D(0.0, 0.0));
 		}
 	}
