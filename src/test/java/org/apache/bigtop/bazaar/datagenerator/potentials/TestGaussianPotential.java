@@ -18,7 +18,6 @@ package org.apache.bigtop.bazaar.datagenerator.potentials;
 import static org.junit.Assert.assertEquals;
 
 import org.apache.bigtop.bazaar.datagenerator.base.Vec2D;
-import org.apache.bigtop.bazaar.datagenerator.potentials.GaussianPotential;
 import org.junit.Test;
 
 
@@ -36,8 +35,8 @@ public class TestGaussianPotential
 		final double expectedPE = -1.0 * strength;
 		
 		GaussianPotential potential = new GaussianPotential(center, radius, strength);
-		potential.update(new Vec2D[]{center});
-		final double observedPE = potential.getEnergy();
+		final double observedPE = potential.compute(new Vec2D[]{center},
+				new Vec2D[] {new Vec2D(0.0, 0.0)});
 		
 		double percentError = (expectedPE - observedPE) / expectedPE;
 		assertEquals("Observed PE: " + observedPE + ", expected PE: " + expectedPE + ", percent error: " + percentError,
@@ -53,9 +52,11 @@ public class TestGaussianPotential
 		
 		final Vec2D expectedForces = new Vec2D(0.0, 0.0);
 		
+		Vec2D[] forces = new Vec2D[] {new Vec2D(0.0, 0.0)};
+		
 		GaussianPotential potential = new GaussianPotential(center, radius, strength);
-		potential.update(new Vec2D[]{center});
-		final Vec2D observedForces = potential.getForces()[0];
+		potential.compute(new Vec2D[]{center}, forces);
+		final Vec2D observedForces = forces[0];
 		
 		double forceDiff = expectedForces.sub(observedForces).norm();
 		double expectedForceDiff = 0.0;

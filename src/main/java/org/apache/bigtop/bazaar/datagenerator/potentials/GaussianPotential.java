@@ -22,8 +22,6 @@ public class GaussianPotential implements Potential
 	Vec2D center;
 	double variance;
 	double scale;
-	Vec2D[] forces;
-	double totalEnergy;
 	
 	public GaussianPotential(Vec2D center, double radius, double strength)
 	{
@@ -35,10 +33,9 @@ public class GaussianPotential implements Potential
 	}
 	
 	@Override
-	public void update(Vec2D[] positions)
+	public double compute(Vec2D[] positions, Vec2D[] forces)
 	{
-		totalEnergy = 0.0;
-		forces = new Vec2D[positions.length];
+		double totalEnergy = 0.0;
 		
 		// -1.0 b/c we want it rotated 180 degrees
 		// scale because we want to control height
@@ -54,23 +51,12 @@ public class GaussianPotential implements Potential
 			double exp = Math.exp(-1.0 * r * r / (2.0 * variance));
 			double dexpdr = -2.0 * r / (2.0 * variance);
 			double forceScalar = constant * exp * dexpdr;
+			Vec2D forceVector = diff.scalarMult(-1.0 * forceScalar);
 			totalEnergy += constant * exp;
 			
-			forces[i] = diff.scalarMult(-1.0 * forceScalar);
+			forces[i] = forces[i].add(forceVector);
 		}
 
-	}
-
-	@Override
-	public double getEnergy()
-	{
 		return totalEnergy;
 	}
-
-	@Override
-	public Vec2D[] getForces()
-	{
-		return forces;
-	}
-
 }

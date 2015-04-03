@@ -22,8 +22,6 @@ public class SphericalBoundaryConditions implements Potential
 	Vec2D center;
 	double radius;
 	double strength;
-	double totalEnergy;
-	Vec2D[] forces;
 	
 	public SphericalBoundaryConditions(Vec2D center, double radius, double strength)
 	{
@@ -33,10 +31,9 @@ public class SphericalBoundaryConditions implements Potential
 	}
 	
 	@Override
-	public void update(Vec2D[] positions)
+	public double compute(Vec2D[] positions, Vec2D[] forces)
 	{
-		totalEnergy = 0.0;
-		forces = new Vec2D[positions.length];
+		double totalEnergy = 0.0;
 		
 		for(int i = 0; i < positions.length; i++)
 		{
@@ -52,21 +49,11 @@ public class SphericalBoundaryConditions implements Potential
 			{
 				totalEnergy += strength * diffCircum * diffCircum;
 				double scalarForce = 2.0 * strength * diffCircum;
-				forces[i] = diff.scalarMult(-1.0 * scalarForce / distCenter);
+				Vec2D forceVector = diff.scalarMult(-1.0 * scalarForce / distCenter);
+				forces[i] = forces[i].add(forceVector);
 			}
 		}
-	}
-
-	@Override
-	public double getEnergy()
-	{
+		
 		return totalEnergy;
 	}
-
-	@Override
-	public Vec2D[] getForces()
-	{
-		return forces;
-	}
-
 }

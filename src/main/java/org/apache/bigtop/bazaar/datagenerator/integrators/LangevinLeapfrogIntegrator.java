@@ -50,44 +50,26 @@ public class LangevinLeapfrogIntegrator implements Integrator
 		this.rng = rng;
 	}
 	
-	protected void updatePotentials(Vec2D[] positions)
+	protected Vec2D[] createVec2DArray(int nParticles)
 	{
-		for(int i = 0; i < potentials.length; i++)
-		{
-			potentials[i].update(positions);
-		}
-	}
-	
-	protected double getPotentialEnergy()
-	{
-		double potentialEnergy = 0.0;
-		for(int i = 0; i < potentials.length; i++)
-		{
-			potentialEnergy += potentials[i].getEnergy();
-		}
-		
-		return potentialEnergy;
-	}
-	
-	protected Vec2D[] getForces(int numberParticles)
-	{
-		Vec2D[] forces = new Vec2D[numberParticles];
-		
-		for(int i = 0; i < numberParticles; i++)
+		Vec2D[] forces = new Vec2D[nParticles];
+		for(int i = 0; i < nParticles; i++)
 		{
 			forces[i] = new Vec2D(0.0, 0.0);
 		}
 		
+		return forces;
+	}
+	
+	protected double computePotentials(final Vec2D[] positions, Vec2D[] forces)
+	{
+		double totalEnergy = 0.0;
 		for(int i = 0; i < potentials.length; i++)
 		{
-			Vec2D[] nextForces = potentials[i].getForces();
-			for(int j = 0; j < nextForces.length; j++)
-			{
-				forces[j] = forces[j].add(nextForces[j]);
-			}
+			totalEnergy += potentials[i].compute(positions, forces);
 		}
 		
-		return forces;
+		return totalEnergy;
 	}
 	
 	protected double computeKineticEnergy(Vec2D[] velocities)
@@ -110,9 +92,11 @@ public class LangevinLeapfrogIntegrator implements Integrator
 	@Override
 	public SimulationState integrate(SimulationState state)
 	{	
-		Vec2D[] newPositions = new Vec2D[state.getNumberParticles()];
-		Vec2D[] newVelocitiesHalf = new Vec2D[state.getNumberParticles()];
-		Vec2D[] newVelocitiesFull = new Vec2D[state.getNumberParticles()];
+		Vec2D[] newPositions = createVec2DArray(state.getNumberParticles());
+		Vec2D[] newVelocitiesHalf = createVec2DArray(state.getNumberParticles());
+		Vec2D[] newVelocitiesFull = createVec2DArray(state.getNumberParticles());
+		Vec2D[] forcesHalf = createVec2DArray(state.getNumberParticles());
+		Vec2D[] forcesFull = createVec2DArray(state.getNumberParticles());
 		
 		double a = Math.exp(-1.0 * gamma * timestep / 2.0);
 		double b = (1.0 - a) / gamma;
@@ -120,31 +104,30 @@ public class LangevinLeapfrogIntegrator implements Integrator
 		double d = Math.sqrt((1.0 - Math.exp(-1.0 * gamma * timestep)) / (2.0 * gamma));
 		
 		Vec2D[] positions = state.getPositions();
-		updatePotentials(positions);
-		Vec2D[] forces = getForces(state.getNumberParticles());
+		
+		computePotentials(positions, forcesHalf);
 		for(int i = 0; i < state.getNumberParticles(); i++)
 		{
 			newVelocitiesHalf[i] = state.getVelocities()[i].scalarMult(a)
-					.add(forces[i].scalarMult(b / masses[i]))
+					.add(forcesHalf[i].scalarMult(b / masses[i]))
 					.add(gaussianVector().scalarMult(c * d / Math.sqrt(masses[i])));
 			
 			newPositions[i] = positions[i].add(newVelocitiesHalf[i].scalarMult(timestep));
 		}
 		
-		updatePotentials(positions);
-		forces = getForces(state.getNumberParticles());
+		double potentialEnergy = computePotentials(positions, forcesFull);
 		for(int i = 0; i < state.getNumberParticles(); i++)
 		{
 			newVelocitiesFull[i] = newVelocitiesHalf[i].scalarMult(a)
-					.add(forces[i].scalarMult(b / masses[i]))
+					.add(forcesFull[i].scalarMult(b / masses[i]))
 					.add(gaussianVector().scalarMult(c * d / Math.sqrt(masses[i])));
 		}
 		
-		state.setForces(forces);
+		state.setForces(forcesFull);
 		state.setPositions(newPositions);
 		state.setVelocities(newVelocitiesFull);
 		state.setKineticEnergy(computeKineticEnergy(newVelocitiesFull));
-		state.setPotentialEnergy(getPotentialEnergy());
+		state.setPotentialEnergy(potentialEnergy);
 		state.setStep(state.getStep() + 1L);
 		state.setTime(state.getStep() * timestep);
 		

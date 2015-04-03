@@ -35,10 +35,11 @@ public class TestSphericalBoundaryConditions
 		
 		final double expectedPE = 0.0;
 		
+		Vec2D[] forces = new Vec2D[] {new Vec2D(0.0, 0.0)};
+		
 		Potential potential = new SphericalBoundaryConditions(center, radius, strength);
-		potential.update(new Vec2D[]{center});
-		final double observedPE = potential.getEnergy();
-		final Vec2D observedForces = potential.getForces()[0];
+		final double observedPE = potential.compute(new Vec2D[]{center}, forces);
+		final Vec2D observedForces = forces[0];
 		
 		assertEquals("Observed PE: " + observedPE + ", expected PE: " + expectedPE,
 				expectedPE, observedPE, EPS);
@@ -57,11 +58,10 @@ public class TestSphericalBoundaryConditions
 		final Vec2D particleLocation = new Vec2D(3.0, 0.0);
 		
 		final double expectedPE = 0.0;
+		Vec2D[] forces = new Vec2D[] {new Vec2D(0.0, 0.0)};
 		
 		Potential potential = new SphericalBoundaryConditions(center, radius, strength);
-		potential.update(new Vec2D[]{particleLocation});
-		final double observedPE = potential.getEnergy();
-		
+		final double observedPE = potential.compute(new Vec2D[]{particleLocation}, forces);
 		
 		assertEquals("Observed PE: " + observedPE + ", expected PE: " + expectedPE,
 				expectedPE, observedPE, EPS);
@@ -74,11 +74,11 @@ public class TestSphericalBoundaryConditions
 		final double strength = 2.0;
 		final Vec2D center = new Vec2D(0.0, 0.0);
 		final Vec2D particleLocation = new Vec2D(4.0, 0.0);
+		Vec2D[] forces = new Vec2D[] {new Vec2D(0.0, 0.0)};
 		
 		Potential potential = new SphericalBoundaryConditions(center, radius, strength);
-		potential.update(new Vec2D[]{particleLocation});
-		final double observedPE = potential.getEnergy();
-		final Vec2D observedForces = potential.getForces()[0];
+		final double observedPE = potential.compute(new Vec2D[]{particleLocation}, forces);
+		final Vec2D observedForces = forces[0];
 		
 		
 		assertTrue("Observed PE: " + observedPE, observedPE > 0.0);
