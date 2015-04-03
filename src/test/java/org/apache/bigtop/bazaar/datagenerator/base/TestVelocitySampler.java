@@ -29,7 +29,7 @@ public class TestVelocitySampler
 	@Test
 	public void testKineticEnergy()
 	{
-		final int N_SAMPLES = 10000;
+		final int N_SAMPLES = 100000;
 		final int N_PARTICLES = 100;
 		final double mass = 2.0;
 		final double temperature = 300.0; // Kelvin
