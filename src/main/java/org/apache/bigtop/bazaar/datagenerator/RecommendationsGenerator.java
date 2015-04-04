@@ -2,6 +2,7 @@ package org.apache.bigtop.bazaar.datagenerator;
 
 import java.util.Random;
 
+import org.apache.bigtop.bazaar.datagenerator.configuration.RecommendationsParameters;
 import org.apache.bigtop.bazaar.datagenerator.latentvariablemodel.BoothRecommendations;
 import org.apache.bigtop.bazaar.datagenerator.latentvariablemodel.LatentVariables;
 import org.apache.bigtop.bazaar.datagenerator.latentvariablemodel.UserWeights;
@@ -12,10 +13,10 @@ public class RecommendationsGenerator
 	double strength;
 	Random rng;
 	
-	public RecommendationsGenerator(LatentVariables latentVariables, double strength, Random rng)
+	public RecommendationsGenerator(RecommendationsParameters params, LatentVariables latentVariables, Random rng)
 	{
 		this.latentVariables = latentVariables;
-		this.strength = strength;
+		this.strength = params.getInteractionStrength();
 		this.rng = rng;
 	}
 	

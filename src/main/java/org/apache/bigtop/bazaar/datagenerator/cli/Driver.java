@@ -97,7 +97,8 @@ public class Driver
 		BoothGenerator boothGenerator = new BoothGenerator(config.getBoothParameters());
 		Vector<Booth> booths = boothGenerator.generate();
 		
-		RecommendationsGenerator recGenerator = new RecommendationsGenerator(lvModel, 2.0, rng);
+		RecommendationsGenerator recGenerator = new RecommendationsGenerator(config.getRecommendationsParameters(), 
+				lvModel, rng);
 		BoothRecommendations recommendations = recGenerator.generate(config.getCustomers());
 		
 		ParticleSimulation simulation = new ParticleSimulation(config.getSimulationParameters(), booths, 

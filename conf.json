@@ -25,5 +25,11 @@
     	 "Radius": 1.0,
     	 "Strength": 2.0
     	 }
-    ]
+    ],
+
+    "recommendations" :
+    {
+        "latentVariables" : 20,
+        "interactionStrength" : 2.0
+    }
 }

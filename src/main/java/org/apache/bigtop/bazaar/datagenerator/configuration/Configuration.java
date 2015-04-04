@@ -9,6 +9,16 @@ public class Configuration
 	int booths;
 	int customers;
 	
+	public Configuration()
+	{
+		booths = 0;
+		customers = 0;
+		
+		simulationParameters = new ParticleSimulationParameters();
+		boothParameters = new BoothParameters();
+		recommendationsParameters = new RecommendationsParameters();
+	}
+	
 	public ParticleSimulationParameters getSimulationParameters()
 	{
 		return simulationParameters;

@@ -109,13 +109,35 @@ public class ConfigurationReader
 		return config;
 	}
 	
+	public RecommendationsParameters parseRecommendations(Object tree)
+	{
+		Map<String, Object> jsonConfiguration = (Map<String, Object>) tree;
+		
+		RecommendationsParameters config = new RecommendationsParameters();
+		
+		for(Map.Entry<String, Object> entry : jsonConfiguration.entrySet())
+		{
+			String key = entry.getKey();
+			Object value = entry.getValue();
+			
+			if(key.equalsIgnoreCase("latentVariables"))
+			{
+				config.setNumberLatentFactors(((Double) value).intValue());
+			}
+			else if(key.equalsIgnoreCase("interactionStrength"))
+			{
+				config.setInteractionStrength((double) value);
+			}
+		}
+		
+		return config;
+	}
+	
 	public Configuration parseConfiguration(Object tree)
 	{
 		Map<String, Object> jsonConfiguration = (Map<String, Object>) tree;
 		
 		Configuration config = new Configuration();
-		
-		
 		
 		for(Map.Entry<String, Object> entry : jsonConfiguration.entrySet())
 		{
@@ -144,13 +166,14 @@ public class ConfigurationReader
 			{
 				config.setCustomers(((Double) value).intValue());
 			}
+			else if(key.equalsIgnoreCase("recommendations"))
+			{
+				RecommendationsParameters recParams = parseRecommendations(value);
+				config.setRecommendationsParameters(recParams);
+			}
 		}
 		
-		RecommendationsParameters lvmParams = new RecommendationsParameters();
-		lvmParams.setNumberBooths(config.getBoothParameters().getBooths().size());
-		lvmParams.setNumberLatentFactors(20);
-		lvmParams.setInteractionStrength(2.0);
-		config.setRecommendationsParameters(lvmParams);
+		config.getRecommendationsParameters().setNumberBooths(config.getBoothParameters().getBooths().size());
 		
 		return config;
 	}
