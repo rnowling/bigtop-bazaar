@@ -65,11 +65,11 @@ public class ConfigurationReader
 		return booth;
 	}
 	
-	protected Configuration parseConfiguration(Object tree)
+	protected SimulationParameters parseSimulationParameters(Object tree)
 	{
 		Map<String, Object> jsonConfiguration = (Map<String, Object>) tree;
 		
-		Configuration config = new Configuration();
+		SimulationParameters config = new SimulationParameters();
 		
 		for(Map.Entry<String, Object> entry : jsonConfiguration.entrySet())
 		{
@@ -108,13 +108,38 @@ public class ConfigurationReader
 			{
 				config.setBoundaryStrength((double) value);
 			}
+		}
+		
+		return config;
+	}
+	
+	public Configuration parseConfiguration(Object tree)
+	{
+		Map<String, Object> jsonConfiguration = (Map<String, Object>) tree;
+		
+		Configuration config = new Configuration();
+		
+		for(Map.Entry<String, Object> entry : jsonConfiguration.entrySet())
+		{
+			String key = entry.getKey();
+			Object value = entry.getValue();
+			
+			if(key.equalsIgnoreCase("simulationParameters"))
+			{
+				SimulationParameters params = parseSimulationParameters(value);
+				config.setSimulationParameters(params);
+			}
 			else if(key.equalsIgnoreCase("booths"))
 			{
+				BoothParameters params = new BoothParameters();
+				
 				for(Object boothObj : (List<Booth>) value)
 				{
 					Booth booth = parseBooth(boothObj);
-					config.addBooth(booth);
+					params.addBooth(booth);
 				}
+				
+				config.setBoothParameters(params);
 			}
 		}
 		

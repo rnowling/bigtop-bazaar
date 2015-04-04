@@ -17,18 +17,20 @@ package org.apache.bigtop.bazaar.datagenerator.cli;
 
 import java.io.IOException;
 import java.util.Random;
+import java.util.Vector;
 
+import org.apache.bigtop.bazaar.datagenerator.BoothGenerator;
 import org.apache.bigtop.bazaar.datagenerator.ParticleSimulation;
 import org.apache.bigtop.bazaar.datagenerator.base.SimulationState;
+import org.apache.bigtop.bazaar.datagenerator.configuration.Booth;
+import org.apache.bigtop.bazaar.datagenerator.configuration.BoothParameters;
 import org.apache.bigtop.bazaar.datagenerator.configuration.Configuration;
 import org.apache.bigtop.bazaar.datagenerator.configuration.ConfigurationReader;
+import org.apache.bigtop.bazaar.datagenerator.configuration.SimulationParameters;
 
 public class Driver
 {
 	String configFilePath;
-	Configuration configuration;
-	Random rng;
-	ParticleSimulation simulation;
 	
 	static final int NARGS = 1;
 	
@@ -53,22 +55,17 @@ public class Driver
 		configFilePath = args[0];
 	}
 	
-	private void readConfiguration() throws IOException
+	private Configuration readConfiguration() throws IOException
 	{
 		ConfigurationReader reader = new ConfigurationReader(this.configFilePath);
-		configuration = reader.readConfiguration();
+		Configuration configuration = reader.readConfiguration();
+		return configuration;
 	}
 	
-	private void initializeRng()
-	{
-		rng = new Random();
-	}
 	
-	private void runSimulation()
+	private void runSimulation(ParticleSimulation simulation, long steps)
 	{
-		simulation = new ParticleSimulation(configuration, rng);
-		
-		for(long i = 0; i < configuration.getSteps(); i++)
+		for(long i = 0; i < steps; i++)
 		{
 			SimulationState state = simulation.step();
 			
@@ -82,12 +79,16 @@ public class Driver
 	private void run(String[] args) throws IOException
 	{
 		parseArgs(args);
-		readConfiguration();
+		Configuration config = readConfiguration();
 		
-		System.out.println(configuration.toString());
+		System.out.println(config.getSimulationParameters().toString());
 		
-		initializeRng();
-		runSimulation();
+		Random rng = new Random();
+		BoothGenerator generator = new BoothGenerator(config.getBoothParameters());
+		Vector<Booth> booths = generator.generate();
+		
+		ParticleSimulation simulation = new ParticleSimulation(config.getSimulationParameters(), booths, rng);
+		runSimulation(simulation, config.getSimulationParameters().getSteps());
 	}
 	
 	public static void main(String[] args) throws IOException

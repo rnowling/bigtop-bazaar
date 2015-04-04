@@ -23,7 +23,7 @@ import org.apache.bigtop.bazaar.datagenerator.base.SimulationState;
 import org.apache.bigtop.bazaar.datagenerator.base.Vec2D;
 import org.apache.bigtop.bazaar.datagenerator.base.VelocitySampler;
 import org.apache.bigtop.bazaar.datagenerator.configuration.Booth;
-import org.apache.bigtop.bazaar.datagenerator.configuration.Configuration;
+import org.apache.bigtop.bazaar.datagenerator.configuration.SimulationParameters;
 import org.apache.bigtop.bazaar.datagenerator.integrators.Integrator;
 import org.apache.bigtop.bazaar.datagenerator.integrators.LangevinLeapfrogIntegrator;
 import org.apache.bigtop.bazaar.datagenerator.potentials.GaussianPotential;
@@ -34,13 +34,15 @@ public class ParticleSimulation
 {
 	Integrator integrator;
 	SimulationState currentState;
-	Configuration configuration;
+	SimulationParameters configuration;
 	Random rng;
 	Potential[] potentials;
+	Vector<Booth> booths;
 	
-	public ParticleSimulation(Configuration configuration, Random rng)
+	public ParticleSimulation(SimulationParameters configuration, Vector<Booth> booths, Random rng)
 	{
 		this.configuration = configuration;
+		this.booths = booths;
 		this.rng = rng;
 		
 		initialize();
@@ -54,9 +56,7 @@ public class ParticleSimulation
 	}
 	
 	protected void buildPotentials()
-	{
-		Vector<Booth> booths = configuration.getBooths();
-		
+	{	
 		// boundary conditions + booths
 		potentials = new Potential[booths.size() + 1];
 		
@@ -66,12 +66,12 @@ public class ParticleSimulation
 				configuration.getBoundaryStrength());
 		
 		
-		for(int i = 1; i < booths.size() + 1; i++)
+		for(int i = 0; i < booths.size(); i++)
 		{
-			Booth booth = booths.get(i - 1);
+			Booth booth = booths.get(i);
 			Vec2D boothCenter = new Vec2D(booth.getPositionX(),
 					booth.getPositionY());
-			potentials[i] = new GaussianPotential(boothCenter,
+			potentials[i+1] = new GaussianPotential(boothCenter,
 					booth.getRadius(), booth.getStrength());
 		}
 	}
