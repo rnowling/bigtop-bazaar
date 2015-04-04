@@ -1,6 +1,6 @@
 package org.apache.bigtop.bazaar.datagenerator.configuration;
 
-public class LatentVariableModelParameters
+public class RecommendationsParameters
 {
 	int numberBooths;
 	int numberLatentFactors;

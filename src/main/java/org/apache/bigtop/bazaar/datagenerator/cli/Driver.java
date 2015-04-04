@@ -71,10 +71,13 @@ public class Driver
 		{
 			SimulationState state = simulation.step();
 			
-			System.out.println("Step: " + i + ", " +
-					"Time: " + state.getTime() + ", " +
-					"Kinetic Energy: " + state.getKineticEnergy() + ", " +
-					"Potential Energy: " + state.getPotentialEnergy());
+			if(i % 100 == 0)
+			{
+				System.out.println("Step: " + i + ", " +
+						"Time: " + state.getTime() + ", " +
+						"Kinetic Energy: " + state.getKineticEnergy() + ", " +
+						"Potential Energy: " + state.getPotentialEnergy());
+			}
 		}
 	}
 	
@@ -88,14 +91,14 @@ public class Driver
 		Random rng = new Random();
 		
 		LatentVariableGenerator lvmGenerator =
-				new LatentVariableGenerator(config.getLatentVariableModelParameters(), rng);
+				new LatentVariableGenerator(config.getRecommendationsParameters(), rng);
 		LatentVariables lvModel = lvmGenerator.generate();
 		
 		BoothGenerator boothGenerator = new BoothGenerator(config.getBoothParameters());
 		Vector<Booth> booths = boothGenerator.generate();
 		
 		RecommendationsGenerator recGenerator = new RecommendationsGenerator(lvModel, 2.0, rng);
-		BoothRecommendations recommendations = recGenerator.generate(config.getSimulationParameters().getNumberParticles());
+		BoothRecommendations recommendations = recGenerator.generate(config.getCustomers());
 		
 		ParticleSimulation simulation = new ParticleSimulation(config.getSimulationParameters(), booths, 
 				recommendations, rng);

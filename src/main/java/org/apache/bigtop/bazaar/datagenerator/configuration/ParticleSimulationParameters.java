@@ -17,13 +17,12 @@ package org.apache.bigtop.bazaar.datagenerator.configuration;
 
 
 
-public class SimulationParameters
+public class ParticleSimulationParameters
 {
 	long steps;
 	double timestep;
 	double temperature;
 	double damping;
-	int numberParticles;
 	double boundaryRadius;
 	double boundaryStrength;
 	double particleMass;
@@ -48,11 +47,6 @@ public class SimulationParameters
 		this.damping = damping;
 	}
 
-	public void setNumberParticles(int numberParticles)
-	{
-		this.numberParticles = numberParticles;
-	}
-
 	public void setBoundaryRadius(double boundaryRadius)
 	{
 		this.boundaryRadius = boundaryRadius;
@@ -66,11 +60,6 @@ public class SimulationParameters
 	public void setParticleMass(double particleMass)
 	{
 		this.particleMass = particleMass;
-	}
-
-	public int getNumberParticles()
-	{
-		return numberParticles;
 	}
 
 	public long getSteps()
@@ -115,7 +104,6 @@ public class SimulationParameters
 				"temperature: " + temperature + "\n" +
 				"damping: " + damping + "\n" +
 				"particle mass: " + particleMass + "\n" +
-				"number of particles: " + numberParticles + "\n" +
 				"boundary radius: " + boundaryRadius + "\n" +
 				"boundary strength: " + boundaryStrength + "\n" +
 				"booths: \n";

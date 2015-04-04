@@ -1,14 +1,13 @@
 {
-    "simulationParameters": 
+    "customers" : 10,
+
+    "particleSimulation": 
     { 
         "steps" : 20000,
         "timestep" : 0.1,
         "temperature" : 10.0,
         "damping": 2.0,
-        "numberParticles": 10,
         "particleMass": 2.0,
-        "positionfile": "positions.xyz",
-        "velocityfile": "velocities.xyz",
         "outputPeriod": 100,
         "boundaryRadius": 10,
         "boundaryStrength": 1

@@ -65,11 +65,11 @@ public class ConfigurationReader
 		return booth;
 	}
 	
-	protected SimulationParameters parseSimulationParameters(Object tree)
+	protected ParticleSimulationParameters parseSimulationParameters(Object tree)
 	{
 		Map<String, Object> jsonConfiguration = (Map<String, Object>) tree;
 		
-		SimulationParameters config = new SimulationParameters();
+		ParticleSimulationParameters config = new ParticleSimulationParameters();
 		
 		for(Map.Entry<String, Object> entry : jsonConfiguration.entrySet())
 		{
@@ -91,10 +91,6 @@ public class ConfigurationReader
 			else if(key.equalsIgnoreCase("damping"))
 			{
 				config.setDamping((double) value);
-			}
-			else if(key.equalsIgnoreCase("numberParticles"))
-			{
-				config.setNumberParticles(((Double) value).intValue());
 			}
 			else if(key.equalsIgnoreCase("particleMass"))
 			{
@@ -126,9 +122,9 @@ public class ConfigurationReader
 			String key = entry.getKey();
 			Object value = entry.getValue();
 			
-			if(key.equalsIgnoreCase("simulationParameters"))
+			if(key.equalsIgnoreCase("particleSimulation"))
 			{
-				SimulationParameters params = parseSimulationParameters(value);
+				ParticleSimulationParameters params = parseSimulationParameters(value);
 				config.setSimulationParameters(params);
 			}
 			else if(key.equalsIgnoreCase("booths"))
@@ -142,14 +138,19 @@ public class ConfigurationReader
 				}
 				
 				config.setBoothParameters(params);
+				config.setBooths(params.getBooths().size());
+			}
+			else if(key.equalsIgnoreCase("customers"))
+			{
+				config.setCustomers(((Double) value).intValue());
 			}
 		}
 		
-		LatentVariableModelParameters lvmParams = new LatentVariableModelParameters();
+		RecommendationsParameters lvmParams = new RecommendationsParameters();
 		lvmParams.setNumberBooths(config.getBoothParameters().getBooths().size());
 		lvmParams.setNumberLatentFactors(20);
 		lvmParams.setInteractionStrength(2.0);
-		config.setLatentVariableModelParameters(lvmParams);
+		config.setRecommendationsParameters(lvmParams);
 		
 		return config;
 	}

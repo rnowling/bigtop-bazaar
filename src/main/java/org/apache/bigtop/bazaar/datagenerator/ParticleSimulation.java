@@ -23,7 +23,7 @@ import org.apache.bigtop.bazaar.datagenerator.base.SimulationState;
 import org.apache.bigtop.bazaar.datagenerator.base.Vec2D;
 import org.apache.bigtop.bazaar.datagenerator.base.VelocitySampler;
 import org.apache.bigtop.bazaar.datagenerator.configuration.Booth;
-import org.apache.bigtop.bazaar.datagenerator.configuration.SimulationParameters;
+import org.apache.bigtop.bazaar.datagenerator.configuration.ParticleSimulationParameters;
 import org.apache.bigtop.bazaar.datagenerator.integrators.Integrator;
 import org.apache.bigtop.bazaar.datagenerator.integrators.LangevinLeapfrogIntegrator;
 import org.apache.bigtop.bazaar.datagenerator.latentvariablemodel.BoothRecommendations;
@@ -35,19 +35,23 @@ public class ParticleSimulation
 {
 	Integrator integrator;
 	SimulationState currentState;
-	SimulationParameters configuration;
+	ParticleSimulationParameters configuration;
 	Random rng;
 	Potential[] potentials;
 	Vector<Booth> booths;
 	BoothRecommendations recommendations;
+	int nParticles;
 	
-	public ParticleSimulation(SimulationParameters configuration, Vector<Booth> booths, 
+	public ParticleSimulation(ParticleSimulationParameters configuration, Vector<Booth> booths, 
 			BoothRecommendations recommendations, Random rng)
 	{
 		this.configuration = configuration;
 		this.booths = booths;
 		this.rng = rng;
 		this.recommendations = recommendations;
+		nParticles = recommendations.getUsers();
+		
+		System.out.println("Number of particles: " + nParticles);
 		
 		initialize();
 	}
@@ -82,7 +86,7 @@ public class ParticleSimulation
 	
 	protected void buildIntegrator()
 	{
-		double[] masses = new double[configuration.getNumberParticles()];
+		double[] masses = new double[nParticles];
 		Arrays.fill(masses, configuration.getParticleMass());
 		integrator = new LangevinLeapfrogIntegrator(configuration.getTimestep(),
 				configuration.getTemperature(), configuration.getDamping(),
@@ -91,7 +95,7 @@ public class ParticleSimulation
 	
 	protected void buildSimulationState()
 	{
-		currentState = new SimulationState(configuration.getNumberParticles());
+		currentState = new SimulationState(nParticles);
 		currentState.setTime(0.0);
 		currentState.setPotentialEnergy(0.0);
 		currentState.setKineticEnergy(0.0);
@@ -99,10 +103,10 @@ public class ParticleSimulation
 		VelocitySampler velocitySampler = new VelocitySampler(configuration.getTemperature(),
 				configuration.getParticleMass(), rng);
 		
-		Vec2D[] velocities = new Vec2D[configuration.getNumberParticles()];
-		Vec2D[] positions = new Vec2D[configuration.getNumberParticles()];
-		Vec2D[] forces = new Vec2D[configuration.getNumberParticles()];
-		for(int i = 0; i < configuration.getNumberParticles(); i++)
+		Vec2D[] velocities = new Vec2D[nParticles];
+		Vec2D[] positions = new Vec2D[nParticles];
+		Vec2D[] forces = new Vec2D[nParticles];
+		for(int i = 0; i < nParticles; i++)
 		{
 			velocities[i] = velocitySampler.sample();
 			positions[i] = new Vec2D(0.0, 0.0);

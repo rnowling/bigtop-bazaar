@@ -3,16 +3,18 @@ package org.apache.bigtop.bazaar.datagenerator.configuration;
 
 public class Configuration
 {
-	SimulationParameters simulationParameters;
+	ParticleSimulationParameters simulationParameters;
 	BoothParameters boothParameters;
-	LatentVariableModelParameters latentVariableModelParameters;
+	RecommendationsParameters recommendationsParameters;
+	int booths;
+	int customers;
 	
-	public SimulationParameters getSimulationParameters()
+	public ParticleSimulationParameters getSimulationParameters()
 	{
 		return simulationParameters;
 	}
 	
-	public void setSimulationParameters(SimulationParameters params)
+	public void setSimulationParameters(ParticleSimulationParameters params)
 	{
 		this.simulationParameters = params;
 	}
@@ -27,14 +29,34 @@ public class Configuration
 		this.boothParameters = boothParameters;
 	}
 
-	public LatentVariableModelParameters getLatentVariableModelParameters()
+	public RecommendationsParameters getRecommendationsParameters()
 	{
-		return latentVariableModelParameters;
+		return recommendationsParameters;
 	}
 
-	public void setLatentVariableModelParameters(
-			LatentVariableModelParameters latentVariableModelParameters)
+	public void setRecommendationsParameters(
+			RecommendationsParameters recommendationsParameters)
 	{
-		this.latentVariableModelParameters = latentVariableModelParameters;
+		this.recommendationsParameters = recommendationsParameters;
+	}
+
+	public int getCustomers()
+	{
+		return customers;
+	}
+
+	public void setCustomers(int customers)
+	{
+		this.customers = customers;
+	}
+
+	public int getBooths()
+	{
+		return booths;
+	}
+
+	public void setBooths(int booths)
+	{
+		this.booths = booths;
 	}
 }
