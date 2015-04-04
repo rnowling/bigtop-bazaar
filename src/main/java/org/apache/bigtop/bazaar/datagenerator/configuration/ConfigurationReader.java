@@ -37,7 +37,7 @@ public class ConfigurationReader
 	{
 		Map<String, Object> jsonBooth = (Map<String, Object>) tree;
 		
-		BoothImpl booth = new BoothImpl();
+		Booth booth = new Booth();
 		
 		for(Map.Entry<String, Object> entry : jsonBooth.entrySet())
 		{
@@ -119,6 +119,8 @@ public class ConfigurationReader
 		
 		Configuration config = new Configuration();
 		
+		
+		
 		for(Map.Entry<String, Object> entry : jsonConfiguration.entrySet())
 		{
 			String key = entry.getKey();
@@ -142,6 +144,12 @@ public class ConfigurationReader
 				config.setBoothParameters(params);
 			}
 		}
+		
+		LatentVariableModelParameters lvmParams = new LatentVariableModelParameters();
+		lvmParams.setNumberBooths(config.getBoothParameters().getBooths().size());
+		lvmParams.setNumberUsers(config.getSimulationParameters().getNumberParticles());
+		lvmParams.setInteractionStrength(2.0);
+		config.setLatentVariableModelParameters(lvmParams);
 		
 		return config;
 	}

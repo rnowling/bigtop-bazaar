@@ -15,15 +15,55 @@
  */
 package org.apache.bigtop.bazaar.datagenerator.configuration;
 
-public interface Booth
+public class Booth
 {
+	double positionX;
+	double positionY;
+	double radius;
+	double strength;
+	
+	public void setPositionX(double positionX)
+	{
+		this.positionX = positionX;
+	}
 
-	public abstract double getPositionX();
+	public void setPositionY(double positionY)
+	{
+		this.positionY = positionY;
+	}
 
-	public abstract double getPositionY();
+	public void setRadius(double radius)
+	{
+		this.radius = radius;
+	}
 
-	public abstract double getRadius();
+	public void setStrength(double strength)
+	{
+		this.strength = strength;
+	}
 
-	public abstract double getStrength();
-
+	public double getPositionX()
+	{
+		return positionX;
+	}
+	
+	public double getPositionY()
+	{
+		return positionY;
+	}
+	
+	public double getRadius()
+	{
+		return radius;
+	}
+	
+	public double getStrength()
+	{
+		return strength;
+	}
+	
+	public String toString()
+	{
+		return "Booth: position(" + positionX + ", " + positionY + "), radius(" + radius + "), strength(" + strength + ")";
+	}
 }

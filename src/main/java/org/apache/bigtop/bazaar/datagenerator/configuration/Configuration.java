@@ -5,6 +5,7 @@ public class Configuration
 {
 	SimulationParameters simulationParameters;
 	BoothParameters boothParameters;
+	LatentVariableModelParameters latentVariableModelParameters;
 	
 	public SimulationParameters getSimulationParameters()
 	{
@@ -24,5 +25,16 @@ public class Configuration
 	public void setBoothParameters(BoothParameters boothParameters)
 	{
 		this.boothParameters = boothParameters;
+	}
+
+	public LatentVariableModelParameters getLatentVariableModelParameters()
+	{
+		return latentVariableModelParameters;
+	}
+
+	public void setLatentVariableModelParameters(
+			LatentVariableModelParameters latentVariableModelParameters)
+	{
+		this.latentVariableModelParameters = latentVariableModelParameters;
 	}
 }

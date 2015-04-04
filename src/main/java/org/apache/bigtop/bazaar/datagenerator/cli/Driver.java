@@ -20,13 +20,13 @@ import java.util.Random;
 import java.util.Vector;
 
 import org.apache.bigtop.bazaar.datagenerator.BoothGenerator;
+import org.apache.bigtop.bazaar.datagenerator.LatentVariableModelGenerator;
 import org.apache.bigtop.bazaar.datagenerator.ParticleSimulation;
 import org.apache.bigtop.bazaar.datagenerator.base.SimulationState;
 import org.apache.bigtop.bazaar.datagenerator.configuration.Booth;
-import org.apache.bigtop.bazaar.datagenerator.configuration.BoothParameters;
 import org.apache.bigtop.bazaar.datagenerator.configuration.Configuration;
 import org.apache.bigtop.bazaar.datagenerator.configuration.ConfigurationReader;
-import org.apache.bigtop.bazaar.datagenerator.configuration.SimulationParameters;
+import org.apache.bigtop.bazaar.datagenerator.latentvariablemodel.LatentVariableModel;
 
 public class Driver
 {
@@ -84,8 +84,13 @@ public class Driver
 		System.out.println(config.getSimulationParameters().toString());
 		
 		Random rng = new Random();
-		BoothGenerator generator = new BoothGenerator(config.getBoothParameters());
-		Vector<Booth> booths = generator.generate();
+		
+		LatentVariableModelGenerator lvmGenerator =
+				new LatentVariableModelGenerator(config.getLatentVariableModelParameters(), rng);
+		LatentVariableModel lvModel = lvmGenerator.generate();
+		
+		BoothGenerator boothGenerator = new BoothGenerator(config.getBoothParameters(), lvModel);
+		Vector<Booth> booths = boothGenerator.generate();
 		
 		ParticleSimulation simulation = new ParticleSimulation(config.getSimulationParameters(), booths, rng);
 		runSimulation(simulation, config.getSimulationParameters().getSteps());
