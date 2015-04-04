@@ -147,7 +147,7 @@ public class ConfigurationReader
 		
 		LatentVariableModelParameters lvmParams = new LatentVariableModelParameters();
 		lvmParams.setNumberBooths(config.getBoothParameters().getBooths().size());
-		lvmParams.setNumberUsers(config.getSimulationParameters().getNumberParticles());
+		lvmParams.setNumberLatentFactors(20);
 		lvmParams.setInteractionStrength(2.0);
 		config.setLatentVariableModelParameters(lvmParams);
 		

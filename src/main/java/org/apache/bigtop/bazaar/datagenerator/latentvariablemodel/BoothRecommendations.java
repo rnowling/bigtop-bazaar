@@ -2,13 +2,13 @@ package org.apache.bigtop.bazaar.datagenerator.latentvariablemodel;
 
 import java.util.Arrays;
 
-public class LatentVariableModel
+public class BoothRecommendations
 {
 	int products;
 	int users;
 	double[][] matrix;
 	
-	public LatentVariableModel(int products, int users, double fillValue)
+	public BoothRecommendations(int products, int users, double fillValue)
 	{
 		this.products = products;
 		this.users = users;

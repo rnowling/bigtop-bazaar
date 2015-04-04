@@ -26,6 +26,7 @@ import org.apache.bigtop.bazaar.datagenerator.configuration.Booth;
 import org.apache.bigtop.bazaar.datagenerator.configuration.SimulationParameters;
 import org.apache.bigtop.bazaar.datagenerator.integrators.Integrator;
 import org.apache.bigtop.bazaar.datagenerator.integrators.LangevinLeapfrogIntegrator;
+import org.apache.bigtop.bazaar.datagenerator.latentvariablemodel.BoothRecommendations;
 import org.apache.bigtop.bazaar.datagenerator.potentials.GaussianPotential;
 import org.apache.bigtop.bazaar.datagenerator.potentials.Potential;
 import org.apache.bigtop.bazaar.datagenerator.potentials.SphericalBoundaryConditions;
@@ -38,12 +39,15 @@ public class ParticleSimulation
 	Random rng;
 	Potential[] potentials;
 	Vector<Booth> booths;
+	BoothRecommendations recommendations;
 	
-	public ParticleSimulation(SimulationParameters configuration, Vector<Booth> booths, Random rng)
+	public ParticleSimulation(SimulationParameters configuration, Vector<Booth> booths, 
+			BoothRecommendations recommendations, Random rng)
 	{
 		this.configuration = configuration;
 		this.booths = booths;
 		this.rng = rng;
+		this.recommendations = recommendations;
 		
 		initialize();
 	}

@@ -3,7 +3,7 @@ package org.apache.bigtop.bazaar.datagenerator.configuration;
 public class LatentVariableModelParameters
 {
 	int numberBooths;
-	int numberUsers;
+	int numberLatentFactors;
 	double interactionStrength;
 	
 	public int getNumberBooths()
@@ -16,14 +16,14 @@ public class LatentVariableModelParameters
 		this.numberBooths = numberBooths;
 	}
 	
-	public int getNumberUsers()
+	public int getNumberLatentFactors()
 	{
-		return numberUsers;
+		return numberLatentFactors;
 	}
 	
-	public void setNumberUsers(int numberUsers)
+	public void setNumberLatentFactors(int numberLatentFactors)
 	{
-		this.numberUsers = numberUsers;
+		this.numberLatentFactors = numberLatentFactors;
 	}
 	
 	public double getInteractionStrength()

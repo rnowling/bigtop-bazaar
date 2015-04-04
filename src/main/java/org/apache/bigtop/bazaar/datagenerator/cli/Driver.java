@@ -20,13 +20,15 @@ import java.util.Random;
 import java.util.Vector;
 
 import org.apache.bigtop.bazaar.datagenerator.BoothGenerator;
-import org.apache.bigtop.bazaar.datagenerator.LatentVariableModelGenerator;
+import org.apache.bigtop.bazaar.datagenerator.LatentVariableGenerator;
 import org.apache.bigtop.bazaar.datagenerator.ParticleSimulation;
+import org.apache.bigtop.bazaar.datagenerator.RecommendationsGenerator;
 import org.apache.bigtop.bazaar.datagenerator.base.SimulationState;
 import org.apache.bigtop.bazaar.datagenerator.configuration.Booth;
 import org.apache.bigtop.bazaar.datagenerator.configuration.Configuration;
 import org.apache.bigtop.bazaar.datagenerator.configuration.ConfigurationReader;
-import org.apache.bigtop.bazaar.datagenerator.latentvariablemodel.LatentVariableModel;
+import org.apache.bigtop.bazaar.datagenerator.latentvariablemodel.BoothRecommendations;
+import org.apache.bigtop.bazaar.datagenerator.latentvariablemodel.LatentVariables;
 
 public class Driver
 {
@@ -85,14 +87,18 @@ public class Driver
 		
 		Random rng = new Random();
 		
-		LatentVariableModelGenerator lvmGenerator =
-				new LatentVariableModelGenerator(config.getLatentVariableModelParameters(), rng);
-		LatentVariableModel lvModel = lvmGenerator.generate();
+		LatentVariableGenerator lvmGenerator =
+				new LatentVariableGenerator(config.getLatentVariableModelParameters(), rng);
+		LatentVariables lvModel = lvmGenerator.generate();
 		
-		BoothGenerator boothGenerator = new BoothGenerator(config.getBoothParameters(), lvModel);
+		BoothGenerator boothGenerator = new BoothGenerator(config.getBoothParameters());
 		Vector<Booth> booths = boothGenerator.generate();
 		
-		ParticleSimulation simulation = new ParticleSimulation(config.getSimulationParameters(), booths, rng);
+		RecommendationsGenerator recGenerator = new RecommendationsGenerator(lvModel, 2.0, rng);
+		BoothRecommendations recommendations = recGenerator.generate(config.getSimulationParameters().getNumberParticles());
+		
+		ParticleSimulation simulation = new ParticleSimulation(config.getSimulationParameters(), booths, 
+				recommendations, rng);
 		runSimulation(simulation, config.getSimulationParameters().getSteps());
 	}
 	
