@@ -12,9 +12,9 @@ public class BoothRecommendations
 	{
 		this.products = products;
 		this.users = users;
-		matrix = new double[users][products];
+		matrix = new double[products][users];
 		
-		for(int i = 0; i < users; i++)
+		for(int i = 0; i < products; i++)
 		{
 			Arrays.fill(matrix[i], fillValue);
 		}
@@ -22,12 +22,12 @@ public class BoothRecommendations
 	
 	public double getRating(int product, int user)
 	{
-		return matrix[user][product];
+		return matrix[product][user];
 	}
 	
-	public double[] getRatings(int user)
+	public double[] getRatings(int product)
 	{
-		return matrix[user];
+		return matrix[product];
 	}
 	
 	public int getProducts()
