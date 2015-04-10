@@ -127,4 +127,15 @@ public class Matrix
 		
 		return transpose;
 	}
+	
+	public Matrix scalarMultiply(double scalar)
+	{
+		Matrix scaled = new Matrix(rows, columns, 0.0);
+		for(int r = 0; r < rows; r++)
+		{
+			scaled.copyToRow(r, getRow(r).scalarMult(scalar));
+		}
+		
+		return scaled;
+	}
 }

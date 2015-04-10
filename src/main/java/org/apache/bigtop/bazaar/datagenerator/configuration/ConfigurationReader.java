@@ -135,9 +135,9 @@ public class ConfigurationReader
 			{
 				config.setNumberBooths(((Double) value).intValue());
 			}
-			else if(key.equalsIgnoreCase("interactionStrength"))
+			else if(key.equalsIgnoreCase("interactionStrengthScaleFactor"))
 			{
-				config.setInteractionStrength((double) value);
+				config.setInteractionStrengthScaleFactor((double) value);
 			}
 		}
 		

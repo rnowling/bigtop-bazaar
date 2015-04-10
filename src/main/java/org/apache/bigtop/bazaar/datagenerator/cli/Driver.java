@@ -22,7 +22,7 @@ import java.util.Vector;
 import org.apache.bigtop.bazaar.datagenerator.BoothGenerator;
 import org.apache.bigtop.bazaar.datagenerator.LatentVariableGenerator;
 import org.apache.bigtop.bazaar.datagenerator.ParticleSimulation;
-import org.apache.bigtop.bazaar.datagenerator.RecommendationsGenerator;
+import org.apache.bigtop.bazaar.datagenerator.CustomerWeightsGenerator;
 import org.apache.bigtop.bazaar.datagenerator.base.SimulationState;
 import org.apache.bigtop.bazaar.datagenerator.configuration.Booth;
 import org.apache.bigtop.bazaar.datagenerator.configuration.Configuration;
@@ -108,9 +108,12 @@ public class Driver
 		Matrix latentVariables = lvmGenerator.generate();
 		
 		System.out.println("Generating user recommendations");
-		RecommendationsGenerator recGenerator = new RecommendationsGenerator(config.getRecommendationsParameters(), 
-				latentVariables, rng);
-		Matrix recommendations = recGenerator.generate(config.getCustomers());
+		CustomerWeightsGenerator custWeightsGenerator =
+					new CustomerWeightsGenerator(config.getRecommendationsParameters(), rng);
+		Matrix customerWeights = custWeightsGenerator.generate(config.getCustomers());
+		
+		Matrix recommendations = latentVariables.multiply(customerWeights)
+				.scalarMultiply(config.getRecommendationsParameters().getInteractionStrengthScaleFactor());
 		
 		System.out.println("Simulating particles");
 		ParticleSimulation simulation = new ParticleSimulation(config.getSimulationParameters(), booths, 

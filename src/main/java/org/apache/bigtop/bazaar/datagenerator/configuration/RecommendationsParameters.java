@@ -19,7 +19,7 @@ public class RecommendationsParameters
 {
 	int numberBooths;
 	int numberLatentFactors;
-	double interactionStrength;
+	double interactionStrengthScaleFactor;
 	
 	public int getNumberBooths()
 	{
@@ -41,20 +41,20 @@ public class RecommendationsParameters
 		this.numberLatentFactors = numberLatentFactors;
 	}
 	
-	public double getInteractionStrength()
+	public double getInteractionStrengthScaleFactor()
 	{
-		return interactionStrength;
+		return interactionStrengthScaleFactor;
 	}
 	
-	public void setInteractionStrength(double interactionStrength)
+	public void setInteractionStrengthScaleFactor(double interactionStrength)
 	{
-		this.interactionStrength = interactionStrength;
+		this.interactionStrengthScaleFactor = interactionStrength;
 	}
 	
 	public String toString()
 	{
 		return "Booths: " + numberBooths + "\n" +
 				"LatentFactors: " + numberLatentFactors + "\n" +
-				"Strength: " + interactionStrength + "\n";
+				"InteractionStrengthScaledFactor: " + interactionStrengthScaleFactor + "\n";
 	}
 }

@@ -23,35 +23,20 @@ import org.apache.bigtop.bazaar.datagenerator.latentvariablemodel.Matrix;
 import org.apache.bigtop.bazaar.datagenerator.latentvariablemodel.MatrixGenerator;
 import org.apache.bigtop.bazaar.datagenerator.latentvariablemodel.Sampler;
 
-public class RecommendationsGenerator
+public class CustomerWeightsGenerator
 {
-	Matrix latentVariables;
 	MatrixGenerator generator;
 	RecommendationsParameters params;
 	
-	public RecommendationsGenerator(RecommendationsParameters params, Matrix latentVariables, Random rng)
+	public CustomerWeightsGenerator(RecommendationsParameters params, Random rng)
 	{
 		this.params = params;
-		this.latentVariables = latentVariables;
 		Sampler<Double> sampler = new BoundedBiGaussianMixtureSampler(0.0, 1.0, 0.25, 0.75, 0.1, 0.9, 0.2, rng);
 		generator = new MatrixGenerator(sampler);
 	}
 	
-	protected Matrix generateUserWeights(int users)
+	public Matrix generate(int customers)
 	{
-		return generator.generate(users, params.getNumberLatentFactors());
-	}
-	
-	protected Matrix project(Matrix weights, int users)
-	{
-		return new Matrix(params.getNumberBooths(), users, params.getInteractionStrength());
-	}
-	
-	public Matrix generate(int users)
-	{
-
-		Matrix recomm = project(null, users);
-		
-		return recomm;
+		return generator.generate(customers, params.getNumberLatentFactors()).transpose();
 	}
 }
