@@ -73,6 +73,17 @@ public class Matrix
 		return vector;
 	}
 	
+	public Vector getRow(int row)
+	{
+		Vector vector = new Vector(columns, 0.0);
+		for(int i = 0; i < vector.getLength(); i++)
+		{
+			vector.setElement(i, getElement(row, i));
+		}
+		
+		return vector;
+	}
+	
 	public int getRows()
 	{
 		return rows;
@@ -81,5 +92,39 @@ public class Matrix
 	public int getColumns()
 	{
 		return columns;
+	}
+	
+	public Matrix multiply(Matrix other)
+	{
+		if(getColumns() != other.getRows())
+		{
+			throw new IllegalArgumentException("Columns of this matrix do not match rows of other matrix");
+		}
+		
+		Matrix result = new Matrix(getRows(), other.getColumns(), 0.0);
+		
+		for(int r = 0; r < rows; r++)
+		{
+			Vector row = getRow(r);
+			for(int c = 0; c < other.getColumns(); c++)
+			{
+				Vector col = other.getColumn(c);
+				
+				result.setElement(r, c, row.dot(col));
+			}
+		}
+		
+		return result;
+	}
+	
+	public Matrix transpose()
+	{
+		Matrix transpose = new Matrix(columns, rows, 0.0);
+		for(int r = 0; r < rows; r++)
+		{
+			transpose.copyToColumn(r, getRow(r));
+		}
+		
+		return transpose;
 	}
 }
