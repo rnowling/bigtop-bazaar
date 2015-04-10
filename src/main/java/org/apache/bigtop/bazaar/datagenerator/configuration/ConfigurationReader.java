@@ -19,7 +19,6 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.Reader;
-import java.util.List;
 import java.util.Map;
 
 import com.google.gson.Gson;
@@ -33,36 +32,44 @@ public class ConfigurationReader
 		this.filename = filename;
 	}
 	
-	protected Booth parseBooth(Object tree)
+	protected BoothParameters parseBoothParameters(Object tree)
 	{
 		Map<String, Object> jsonBooth = (Map<String, Object>) tree;
 		
-		Booth booth = new Booth();
+		BoothParameters params = new BoothParameters();
 		
 		for(Map.Entry<String, Object> entry : jsonBooth.entrySet())
 		{
 			String key = entry.getKey();
 			Object value = entry.getValue();
 			
-			if(key.equalsIgnoreCase("positionX"))
+			if(key.equalsIgnoreCase("rows"))
 			{
-				booth.setPositionX((double) value);
+				params.setRows(((Double) value).intValue());
 			}
-			else if(key.equalsIgnoreCase("positionY"))
+			else if(key.equalsIgnoreCase("columns"))
 			{
-				booth.setPositionY((double) value);
+				params.setColumns(((Double) value).intValue());
 			}
-			else if(key.equalsIgnoreCase("radius"))
+			else if(key.equalsIgnoreCase("radii"))
 			{
-				booth.setRadius((double) value);
+				params.setRadii((double) value);
+			}
+			else if(key.equalsIgnoreCase("columnSpacing"))
+			{
+				params.setColumnSpacing((double) value);
+			}
+			else if(key.equalsIgnoreCase("rowSpacing"))
+			{
+				params.setRowSpacing((double) value);
 			}
 			else if(key.equalsIgnoreCase("strength"))
 			{
-				booth.setStrength((double) value);
+				params.setStrength((double) value);
 			}
 		}
 		
-		return booth;
+		return params;
 	}
 	
 	protected ParticleSimulationParameters parseSimulationParameters(Object tree)
@@ -155,16 +162,8 @@ public class ConfigurationReader
 			}
 			else if(key.equalsIgnoreCase("booths"))
 			{
-				BoothParameters params = new BoothParameters();
-				
-				for(Object boothObj : (List<Booth>) value)
-				{
-					Booth booth = parseBooth(boothObj);
-					params.addBooth(booth);
-				}
-				
+				BoothParameters params = parseBoothParameters(value);
 				config.setBoothParameters(params);
-				config.setBooths(params.getBooths().size());
 			}
 			else if(key.equalsIgnoreCase("customers"))
 			{
@@ -176,8 +175,6 @@ public class ConfigurationReader
 				config.setRecommendationsParameters(recParams);
 			}
 		}
-		
-		//config.getRecommendationsParameters().setNumberBooths(config.getBoothParameters().getBooths().size());
 		
 		return config;
 	}

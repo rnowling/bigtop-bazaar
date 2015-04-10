@@ -87,17 +87,25 @@ public class Driver
 		
 		System.out.println(config.getSimulationParameters().toString());
 		System.out.println(config.getRecommendationsParameters().toString());
+		System.out.println(config.getBoothParameters().toString());
 		
 		Random rng = new Random();
-		
-		System.out.println("Generating latent variables");
-		LatentVariableGenerator lvmGenerator =
-				new LatentVariableGenerator(config.getRecommendationsParameters(), rng);
-		Matrix latentVariables = lvmGenerator.generate();
 		
 		System.out.println("Generating booths");
 		BoothGenerator boothGenerator = new BoothGenerator(config.getBoothParameters());
 		Vector<Booth> booths = boothGenerator.generate();
+		
+		System.out.println();
+		for(Booth booth : booths)
+		{
+			System.out.println("Booth: " + booth.getPositionX() + " " + booth.getPositionY() + " " + booth.getStrength());
+		}
+		System.out.println();
+		
+		System.out.println("Generating latent variables");
+		LatentVariableGenerator lvmGenerator =
+				new LatentVariableGenerator(config.getRecommendationsParameters(), booths.size(), rng);
+		Matrix latentVariables = lvmGenerator.generate();
 		
 		System.out.println("Generating user recommendations");
 		RecommendationsGenerator recGenerator = new RecommendationsGenerator(config.getRecommendationsParameters(), 

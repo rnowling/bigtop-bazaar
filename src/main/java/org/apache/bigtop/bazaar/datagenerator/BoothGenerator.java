@@ -31,6 +31,39 @@ public class BoothGenerator
 	
 	public Vector<Booth> generate()
 	{
-		return this.params.getBooths();
+		Vector<Booth> booths = new Vector<Booth>();
+		double xSum = 0.0;
+		double ySum = 0.0;
+		
+		for(int row = 0; row < params.getRows(); row++)
+		{
+			for(int column = 0; column < params.getColumns(); column++)
+			{
+				double x = params.getRadii() + (params.getRadii() + params.getRowSpacing()) * row;
+				double y = params.getRadii() + (params.getRadii() + params.getColumnSpacing()) * column;
+				
+				xSum += x;
+				ySum += y;
+				
+				Booth booth = new Booth();
+				booth.setPositionX(x);
+				booth.setPositionY(y);
+				booth.setRadius(params.getRadii());
+				booth.setStrength(params.getStrength());
+				
+				booths.add(booth);
+			}
+		}
+		
+		double xCenter = xSum / booths.size();
+		double yCenter = ySum / booths.size();
+		
+		for(Booth booth : booths)
+		{
+			booth.setPositionX(booth.getPositionX() - xCenter);
+			booth.setPositionY(booth.getPositionY() - yCenter);
+		}
+		
+		return booths;
 	}
 }

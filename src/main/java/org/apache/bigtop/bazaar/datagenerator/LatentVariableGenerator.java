@@ -29,9 +29,9 @@ public class LatentVariableGenerator
 	int latentFactors;
 	MatrixGenerator generator;
 	
-	public LatentVariableGenerator(RecommendationsParameters parameters, Random rng)
+	public LatentVariableGenerator(RecommendationsParameters parameters, int booths, Random rng)
 	{
-		this.booths = parameters.getNumberBooths();
+		this.booths = booths;
 		this.latentFactors = parameters.getNumberLatentFactors();
 		Sampler<Double> sampler = new BoundedBiGaussianMixtureSampler(0.0, 1.0, 0.25, 0.75, 0.1, 0.9, 0.2, rng);
 		generator = new MatrixGenerator(sampler);

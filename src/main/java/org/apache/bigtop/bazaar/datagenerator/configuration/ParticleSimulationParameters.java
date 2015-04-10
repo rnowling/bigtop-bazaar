@@ -105,8 +105,7 @@ public class ParticleSimulationParameters
 				"damping: " + damping + "\n" +
 				"particle mass: " + particleMass + "\n" +
 				"boundary radius: " + boundaryRadius + "\n" +
-				"boundary strength: " + boundaryStrength + "\n" +
-				"booths: \n";
+				"boundary strength: " + boundaryStrength + "\n";
 		
 		return str;
 	}

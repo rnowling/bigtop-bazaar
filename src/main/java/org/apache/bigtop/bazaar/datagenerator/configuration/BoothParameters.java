@@ -15,24 +15,83 @@
  */
 package org.apache.bigtop.bazaar.datagenerator.configuration;
 
-import java.util.Vector;
 
 public class BoothParameters
 {
-	Vector<Booth> booths;
-	
-	public BoothParameters()
+	int rows;
+	int columns;
+	double rowSpacing;
+	double columnSpacing;
+	double radii;
+	double strength;
+
+	public int getRows()
 	{
-		this.booths = new Vector<Booth>();
+		return rows;
+	}
+
+	public void setRows(int rows)
+	{
+		this.rows = rows;
+	}
+
+	public int getColumns()
+	{
+		return columns;
+	}
+
+	public void setColumns(int columns)
+	{
+		this.columns = columns;
+	}
+
+	public double getRowSpacing()
+	{
+		return rowSpacing;
+	}
+
+	public void setRowSpacing(double rowSpacing)
+	{
+		this.rowSpacing = rowSpacing;
+	}
+
+	public double getColumnSpacing()
+	{
+		return columnSpacing;
+	}
+
+	public void setColumnSpacing(double columnSpacing)
+	{
+		this.columnSpacing = columnSpacing;
+	}
+
+	public double getRadii()
+	{
+		return radii;
+	}
+
+	public void setRadii(double radii)
+	{
+		this.radii = radii;
+	}
+
+	public double getStrength()
+	{
+		return strength;
+	}
+
+	public void setStrength(double strength)
+	{
+		this.strength = strength;
 	}
 	
-	public void addBooth(Booth booth)
+	public String toString()
 	{
-		booths.add(booth);
-	}
-	
-	public Vector<Booth> getBooths()
-	{
-		return booths;
+		return "Rows: " + rows + "\n" +
+				"Columns: " + columns + "\n" +
+				"Row spacing: " + rowSpacing + "\n" +
+				"Column spacing: " + columnSpacing + "\n" +
+				"Radii: " + radii + "\n" +
+				"Strength: " + strength + "\n";
 	}
 }

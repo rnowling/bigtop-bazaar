@@ -9,27 +9,22 @@
         "damping": 2.0,
         "particleMass": 2.0,
         "outputPeriod": 100,
-        "boundaryRadius": 10,
+        "boundaryRadius": 50,
         "boundaryStrength": 1
     },
 
     "booths":
-    [
-    	{"PositionX": 4.0,
-    	 "PositionY": 4.0,
-    	 "Radius": 1.0,
-    	 "Strength": 2.0
-    	 },
-    	{"PositionX": -3.0,
-    	 "PositionY": -2.0,
-    	 "Radius": 1.0,
-    	 "Strength": 2.0
-    	 }
-    ],
+    {
+        "rows" : 5,
+        "columns" : 5,
+        "radii" : 1.0,
+        "columnSpacing" : 2.0,
+        "rowSpacing" : 2.0,
+        "strength" : 1.0
+    },
 
     "recommendations" :
     {
-        "booths" : 100,
         "latentVariables" : 10,
         "interactionStrength" : 2.0
     }
