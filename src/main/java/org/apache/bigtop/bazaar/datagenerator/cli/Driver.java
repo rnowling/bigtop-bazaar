@@ -27,8 +27,7 @@ import org.apache.bigtop.bazaar.datagenerator.base.SimulationState;
 import org.apache.bigtop.bazaar.datagenerator.configuration.Booth;
 import org.apache.bigtop.bazaar.datagenerator.configuration.Configuration;
 import org.apache.bigtop.bazaar.datagenerator.configuration.ConfigurationReader;
-import org.apache.bigtop.bazaar.datagenerator.latentvariablemodel.BoothRecommendations;
-import org.apache.bigtop.bazaar.datagenerator.latentvariablemodel.LatentVariables;
+import org.apache.bigtop.bazaar.datagenerator.latentvariablemodel.Matrix;
 
 public class Driver
 {
@@ -87,20 +86,25 @@ public class Driver
 		Configuration config = readConfiguration();
 		
 		System.out.println(config.getSimulationParameters().toString());
+		System.out.println(config.getRecommendationsParameters().toString());
 		
 		Random rng = new Random();
 		
+		System.out.println("Generating latent variables");
 		LatentVariableGenerator lvmGenerator =
 				new LatentVariableGenerator(config.getRecommendationsParameters(), rng);
-		LatentVariables lvModel = lvmGenerator.generate();
+		Matrix latentVariables = lvmGenerator.generate();
 		
+		System.out.println("Generating booths");
 		BoothGenerator boothGenerator = new BoothGenerator(config.getBoothParameters());
 		Vector<Booth> booths = boothGenerator.generate();
 		
+		System.out.println("Generating user recommendations");
 		RecommendationsGenerator recGenerator = new RecommendationsGenerator(config.getRecommendationsParameters(), 
-				lvModel, rng);
-		BoothRecommendations recommendations = recGenerator.generate(config.getCustomers());
+				latentVariables, rng);
+		Matrix recommendations = recGenerator.generate(config.getCustomers());
 		
+		System.out.println("Simulating particles");
 		ParticleSimulation simulation = new ParticleSimulation(config.getSimulationParameters(), booths, 
 				recommendations, rng);
 		runSimulation(simulation, config.getSimulationParameters().getSteps());

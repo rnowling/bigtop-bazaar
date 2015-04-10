@@ -50,4 +50,11 @@ public class RecommendationsParameters
 	{
 		this.interactionStrength = interactionStrength;
 	}
+	
+	public String toString()
+	{
+		return "Booths: " + numberBooths + "\n" +
+				"LatentFactors: " + numberLatentFactors + "\n" +
+				"Strength: " + interactionStrength + "\n";
+	}
 }

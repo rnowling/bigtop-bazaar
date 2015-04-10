@@ -124,6 +124,10 @@ public class ConfigurationReader
 			{
 				config.setNumberLatentFactors(((Double) value).intValue());
 			}
+			else if(key.equalsIgnoreCase("booths"))
+			{
+				config.setNumberBooths(((Double) value).intValue());
+			}
 			else if(key.equalsIgnoreCase("interactionStrength"))
 			{
 				config.setInteractionStrength((double) value);
@@ -173,7 +177,7 @@ public class ConfigurationReader
 			}
 		}
 		
-		config.getRecommendationsParameters().setNumberBooths(config.getBoothParameters().getBooths().size());
+		//config.getRecommendationsParameters().setNumberBooths(config.getBoothParameters().getBooths().size());
 		
 		return config;
 	}

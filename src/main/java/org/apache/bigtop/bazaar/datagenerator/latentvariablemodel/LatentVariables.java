@@ -15,24 +15,18 @@
  */
 package org.apache.bigtop.bazaar.datagenerator.latentvariablemodel;
 
-import java.util.Arrays;
 
 public class LatentVariables
 {
 	int booths;
 	int latentVariables;
-	double[][] matrix;
+	Matrix matrix;
 	
-	public LatentVariables(int booths, int latentVariables, double fillValue)
+	public LatentVariables(int booths, int latentVariables, Matrix matrix)
 	{
 		this.booths = booths;
 		this.latentVariables = latentVariables;
-		matrix = new double[booths][latentVariables];
-		
-		for(int i = 0; i < booths; i++)
-		{
-			Arrays.fill(matrix[i], fillValue);
-		}
+		this.matrix = matrix;
 	}
 	
 	public int getBooths()

@@ -18,24 +18,27 @@ package org.apache.bigtop.bazaar.datagenerator;
 import java.util.Random;
 
 import org.apache.bigtop.bazaar.datagenerator.configuration.RecommendationsParameters;
-import org.apache.bigtop.bazaar.datagenerator.latentvariablemodel.LatentVariables;
+import org.apache.bigtop.bazaar.datagenerator.latentvariablemodel.BoundedBiGaussianMixtureSampler;
+import org.apache.bigtop.bazaar.datagenerator.latentvariablemodel.Matrix;
+import org.apache.bigtop.bazaar.datagenerator.latentvariablemodel.MatrixGenerator;
+import org.apache.bigtop.bazaar.datagenerator.latentvariablemodel.Sampler;
 
 public class LatentVariableGenerator
 {
 	int booths;
 	int latentFactors;
-	double fillValue;
-	Random rng;
+	MatrixGenerator generator;
 	
 	public LatentVariableGenerator(RecommendationsParameters parameters, Random rng)
 	{
 		this.booths = parameters.getNumberBooths();
-		this.fillValue = parameters.getInteractionStrength();
-		this.rng = rng;
+		this.latentFactors = parameters.getNumberLatentFactors();
+		Sampler<Double> sampler = new BoundedBiGaussianMixtureSampler(0.0, 1.0, 0.25, 0.75, 0.1, 0.9, 0.2, rng);
+		generator = new MatrixGenerator(sampler);
 	}
 	
-	public LatentVariables generate()
+	public Matrix generate()
 	{
-		return new LatentVariables(booths, latentFactors, fillValue);
+		return generator.generate(booths, latentFactors);
 	}
 }
