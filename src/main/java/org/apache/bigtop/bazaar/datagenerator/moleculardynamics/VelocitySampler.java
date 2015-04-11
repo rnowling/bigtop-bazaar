@@ -13,11 +13,32 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.apache.bigtop.bazaar.datagenerator.integrators;
+package org.apache.bigtop.bazaar.datagenerator.moleculardynamics;
 
-import org.apache.bigtop.bazaar.datagenerator.base.SimulationState;
+import java.util.Random;
 
-public interface Integrator
+public class VelocitySampler
 {
-	public abstract SimulationState integrate(SimulationState state);
+	Random rng;
+	double temperature;
+	double mass;
+	
+	public VelocitySampler(double temperature, double mass, Random rng)
+	{
+		this.rng = rng;
+		this.temperature = temperature;
+		this.mass = mass;
+	}
+	
+	public Vec2D sample()
+	{
+		double kBT = Constants.BOLTZMANN * temperature;
+		
+		double kBTOverM = Math.sqrt(kBT / mass);
+			
+		Vec2D velocities = new Vec2D(rng.nextGaussian() * kBTOverM,
+					rng.nextGaussian() * kBTOverM);
+		
+		return velocities;
+	}
 }

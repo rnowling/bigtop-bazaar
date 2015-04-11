@@ -22,8 +22,8 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
-import org.apache.bigtop.bazaar.datagenerator.base.SimulationState;
-import org.apache.bigtop.bazaar.datagenerator.base.Vec2D;
+import org.apache.bigtop.bazaar.datagenerator.moleculardynamics.SimulationState;
+import org.apache.bigtop.bazaar.datagenerator.moleculardynamics.Vec2D;
 
 public class SimulationStateWriter
 {

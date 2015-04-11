@@ -13,12 +13,14 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.apache.bigtop.bazaar.datagenerator.potentials;
+package org.apache.bigtop.bazaar.datagenerator.moleculardynamics.potentials;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
-import org.apache.bigtop.bazaar.datagenerator.base.Vec2D;
+import org.apache.bigtop.bazaar.datagenerator.moleculardynamics.Vec2D;
+import org.apache.bigtop.bazaar.datagenerator.moleculardynamics.potentials.Potential;
+import org.apache.bigtop.bazaar.datagenerator.moleculardynamics.potentials.SphericalBoundaryConditions;
 import org.junit.Test;
 
 

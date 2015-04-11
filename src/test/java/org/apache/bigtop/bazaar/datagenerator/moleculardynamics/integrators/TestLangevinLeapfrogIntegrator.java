@@ -13,18 +13,20 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.apache.bigtop.bazaar.datagenerator.integrators;
+package org.apache.bigtop.bazaar.datagenerator.moleculardynamics.integrators;
 
 import static org.junit.Assert.assertEquals;
 
 import java.util.Arrays;
 import java.util.Random;
 
-import org.apache.bigtop.bazaar.datagenerator.base.Constants;
-import org.apache.bigtop.bazaar.datagenerator.base.SimulationState;
-import org.apache.bigtop.bazaar.datagenerator.base.Vec2D;
-import org.apache.bigtop.bazaar.datagenerator.base.VelocitySampler;
-import org.apache.bigtop.bazaar.datagenerator.potentials.Potential;
+import org.apache.bigtop.bazaar.datagenerator.moleculardynamics.Constants;
+import org.apache.bigtop.bazaar.datagenerator.moleculardynamics.SimulationState;
+import org.apache.bigtop.bazaar.datagenerator.moleculardynamics.Vec2D;
+import org.apache.bigtop.bazaar.datagenerator.moleculardynamics.VelocitySampler;
+import org.apache.bigtop.bazaar.datagenerator.moleculardynamics.integrators.Integrator;
+import org.apache.bigtop.bazaar.datagenerator.moleculardynamics.integrators.LangevinLeapfrogIntegrator;
+import org.apache.bigtop.bazaar.datagenerator.moleculardynamics.potentials.Potential;
 import org.junit.Test;
 
 

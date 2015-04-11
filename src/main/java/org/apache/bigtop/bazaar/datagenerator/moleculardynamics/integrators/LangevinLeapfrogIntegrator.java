@@ -13,14 +13,14 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.apache.bigtop.bazaar.datagenerator.integrators;
+package org.apache.bigtop.bazaar.datagenerator.moleculardynamics.integrators;
 
 import java.util.Random;
 
-import org.apache.bigtop.bazaar.datagenerator.base.Constants;
-import org.apache.bigtop.bazaar.datagenerator.base.SimulationState;
-import org.apache.bigtop.bazaar.datagenerator.base.Vec2D;
-import org.apache.bigtop.bazaar.datagenerator.potentials.Potential;
+import org.apache.bigtop.bazaar.datagenerator.moleculardynamics.Constants;
+import org.apache.bigtop.bazaar.datagenerator.moleculardynamics.SimulationState;
+import org.apache.bigtop.bazaar.datagenerator.moleculardynamics.Vec2D;
+import org.apache.bigtop.bazaar.datagenerator.moleculardynamics.potentials.Potential;
 
 public class LangevinLeapfrogIntegrator implements Integrator
 {

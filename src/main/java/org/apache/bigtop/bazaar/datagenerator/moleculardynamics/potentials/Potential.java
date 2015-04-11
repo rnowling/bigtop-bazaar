@@ -13,9 +13,17 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.apache.bigtop.bazaar.datagenerator.base;
+package org.apache.bigtop.bazaar.datagenerator.moleculardynamics.potentials;
 
-public class Constants
+import org.apache.bigtop.bazaar.datagenerator.moleculardynamics.Vec2D;
+
+public interface Potential
 {
-	public static final double BOLTZMANN = 0.0083145112119486; // kJ / (mol K)
+	/**
+	 * 
+	 * @param positions
+	 * @param forces
+	 * @return energy
+	 */
+	public abstract double compute(final Vec2D[] positions, Vec2D[] forces);
 }

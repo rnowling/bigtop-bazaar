@@ -13,24 +13,21 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.apache.bigtop.bazaar.datagenerator.potentials;
+package org.apache.bigtop.bazaar.datagenerator.moleculardynamics.potentials;
 
-import org.apache.bigtop.bazaar.datagenerator.base.Vec;
-import org.apache.bigtop.bazaar.datagenerator.base.Vec2D;
+import org.apache.bigtop.bazaar.datagenerator.moleculardynamics.Vec2D;
 
-public class GaussianPotential implements Potential
+public class SphericalBoundaryConditions implements Potential
 {
 	Vec2D center;
-	double variance;
-	Vec scale;
+	double radius;
+	double strength;
 	
-	public GaussianPotential(Vec2D center, double radius, Vec strength)
+	public SphericalBoundaryConditions(Vec2D center, double radius, double strength)
 	{
-		// use 3 std devs distance
-		variance = (radius / 3.0) * (radius  / 3.0);
-		// set height exactly to strength
-		scale = strength.scalarMult(Math.sqrt(2.0 * Math.PI * variance));
 		this.center = center;
+		this.radius = radius;
+		this.strength = strength;
 	}
 	
 	@Override
@@ -38,26 +35,25 @@ public class GaussianPotential implements Potential
 	{
 		double totalEnergy = 0.0;
 		
-		// -1.0 b/c we want it rotated 180 degrees
-		// scale because we want to control height
-		Vec constants = scale.scalarMult(-1.0 / Math.sqrt(2.0 * Math.PI * variance));
-		
 		for(int i = 0; i < positions.length; i++)
 		{
 			Vec2D pos = positions[i];
-			
 			Vec2D diff = pos.sub(center);
-			double r = diff.norm();
+			double distCenter = diff.norm();
 			
-			double exp = Math.exp(-1.0 * r * r / (2.0 * variance));
-			double dexpdr = -2.0 * r / (2.0 * variance);
-			double forceScalar = constants.getElement(i) * exp * dexpdr;
-			Vec2D forceVector = diff.scalarMult(-1.0 * forceScalar);
-			totalEnergy += constants.getElement(i) * exp;
+			double diffCircum = distCenter - radius;
+			forces[i] = new Vec2D(0.0, 0.0);
 			
-			forces[i] = forces[i].add(forceVector);
+			// outside circumference
+			if(diffCircum > 0.0)
+			{
+				totalEnergy += strength * diffCircum * diffCircum;
+				double scalarForce = 2.0 * strength * diffCircum;
+				Vec2D forceVector = diff.scalarMult(-1.0 * scalarForce / distCenter);
+				forces[i] = forces[i].add(forceVector);
+			}
 		}
-
+		
 		return totalEnergy;
 	}
 }
