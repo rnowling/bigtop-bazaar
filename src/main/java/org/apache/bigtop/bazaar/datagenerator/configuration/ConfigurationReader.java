@@ -139,6 +139,10 @@ public class ConfigurationReader
 			{
 				config.setInteractionStrengthScaleFactor((double) value);
 			}
+			else if(key.equalsIgnoreCase("interactionStrengthOverride"))
+			{
+				config.setInteractionStrengthOverride((double) value);
+			}
 		}
 		
 		return config;

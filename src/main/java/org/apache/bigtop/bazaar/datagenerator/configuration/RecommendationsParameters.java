@@ -20,6 +20,7 @@ public class RecommendationsParameters
 	int numberBooths;
 	int numberLatentFactors;
 	double interactionStrengthScaleFactor;
+	double interactionStrengthOverride = -1.0;
 	
 	public int getNumberBooths()
 	{
@@ -51,10 +52,21 @@ public class RecommendationsParameters
 		this.interactionStrengthScaleFactor = interactionStrength;
 	}
 	
+	public double getInteractionStrengthOverride()
+	{
+		return interactionStrengthOverride;
+	}
+
+	public void setInteractionStrengthOverride(double interactionStrengthOverride)
+	{
+		this.interactionStrengthOverride = interactionStrengthOverride;
+	}
+
 	public String toString()
 	{
 		return "Booths: " + numberBooths + "\n" +
 				"LatentFactors: " + numberLatentFactors + "\n" +
-				"InteractionStrengthScaledFactor: " + interactionStrengthScaleFactor + "\n";
+				"InteractionStrengthScaledFactor: " + interactionStrengthScaleFactor + "\n" +
+				"InteractionStrengthOverride: " + interactionStrengthOverride + "\n";
 	}
 }

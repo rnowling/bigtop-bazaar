@@ -20,13 +20,16 @@ import java.util.Random;
 import java.util.Vector;
 
 import org.apache.bigtop.bazaar.datagenerator.BoothGenerator;
+import org.apache.bigtop.bazaar.datagenerator.CustomerWeightsGenerator;
 import org.apache.bigtop.bazaar.datagenerator.LatentVariableGenerator;
 import org.apache.bigtop.bazaar.datagenerator.ParticleSimulation;
-import org.apache.bigtop.bazaar.datagenerator.CustomerWeightsGenerator;
 import org.apache.bigtop.bazaar.datagenerator.base.SimulationState;
 import org.apache.bigtop.bazaar.datagenerator.configuration.Booth;
+import org.apache.bigtop.bazaar.datagenerator.configuration.BoothParameters;
 import org.apache.bigtop.bazaar.datagenerator.configuration.Configuration;
 import org.apache.bigtop.bazaar.datagenerator.configuration.ConfigurationReader;
+import org.apache.bigtop.bazaar.datagenerator.configuration.ParticleSimulationParameters;
+import org.apache.bigtop.bazaar.datagenerator.configuration.RecommendationsParameters;
 import org.apache.bigtop.bazaar.datagenerator.latentvariablemodel.Matrix;
 
 public class Driver
@@ -85,14 +88,18 @@ public class Driver
 		parseArgs(args);
 		Configuration config = readConfiguration();
 		
-		System.out.println(config.getSimulationParameters().toString());
-		System.out.println(config.getRecommendationsParameters().toString());
-		System.out.println(config.getBoothParameters().toString());
+		ParticleSimulationParameters particleSimParams = config.getSimulationParameters();
+		RecommendationsParameters recParams = config.getRecommendationsParameters();
+		BoothParameters boothParams = config.getBoothParameters();
+		
+		System.out.println(particleSimParams);
+		System.out.println(recParams);
+		System.out.println(boothParams);
 		
 		Random rng = new Random();
 		
 		System.out.println("Generating booths");
-		BoothGenerator boothGenerator = new BoothGenerator(config.getBoothParameters());
+		BoothGenerator boothGenerator = new BoothGenerator(boothParams);
 		Vector<Booth> booths = boothGenerator.generate();
 		
 		System.out.println();
@@ -104,16 +111,21 @@ public class Driver
 		
 		System.out.println("Generating latent variables");
 		LatentVariableGenerator lvmGenerator =
-				new LatentVariableGenerator(config.getRecommendationsParameters(), booths.size(), rng);
+				new LatentVariableGenerator(recParams, booths.size(), rng);
 		Matrix latentVariables = lvmGenerator.generate();
 		
 		System.out.println("Generating user recommendations");
 		CustomerWeightsGenerator custWeightsGenerator =
-					new CustomerWeightsGenerator(config.getRecommendationsParameters(), rng);
+					new CustomerWeightsGenerator(recParams, rng);
 		Matrix customerWeights = custWeightsGenerator.generate(config.getCustomers());
 		
 		Matrix recommendations = latentVariables.multiply(customerWeights)
-				.scalarMultiply(config.getRecommendationsParameters().getInteractionStrengthScaleFactor());
+				.scalarMultiply(recParams.getInteractionStrengthScaleFactor());
+		
+		if(recParams.getInteractionStrengthOverride() != -1.0)
+		{
+			recommendations = new Matrix(booths.size(), config.getCustomers(), recParams.getInteractionStrengthOverride());
+		}
 		
 		System.out.println("Simulating particles");
 		ParticleSimulation simulation = new ParticleSimulation(config.getSimulationParameters(), booths, 
