@@ -17,6 +17,8 @@ package org.apache.bigtop.bazaar.datagenerator.latentvariablemodel;
 
 import java.util.Arrays;
 
+import org.apache.bigtop.bazaar.datagenerator.base.Vec;
+
 public class Matrix
 {
 	int rows;

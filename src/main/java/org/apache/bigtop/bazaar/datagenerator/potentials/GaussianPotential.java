@@ -15,8 +15,8 @@
  */
 package org.apache.bigtop.bazaar.datagenerator.potentials;
 
+import org.apache.bigtop.bazaar.datagenerator.base.Vec;
 import org.apache.bigtop.bazaar.datagenerator.base.Vec2D;
-import org.apache.bigtop.bazaar.datagenerator.latentvariablemodel.Vec;
 
 public class GaussianPotential implements Potential
 {

@@ -19,6 +19,7 @@ import static org.junit.Assert.assertEquals;
 
 import java.util.Random;
 
+import org.apache.bigtop.bazaar.datagenerator.base.Vec;
 import org.junit.Test;
 
 

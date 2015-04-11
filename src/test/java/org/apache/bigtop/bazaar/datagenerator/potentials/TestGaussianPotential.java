@@ -17,8 +17,8 @@ package org.apache.bigtop.bazaar.datagenerator.potentials;
 
 import static org.junit.Assert.assertEquals;
 
+import org.apache.bigtop.bazaar.datagenerator.base.Vec;
 import org.apache.bigtop.bazaar.datagenerator.base.Vec2D;
-import org.apache.bigtop.bazaar.datagenerator.latentvariablemodel.Vec;
 import org.junit.Test;
 
 

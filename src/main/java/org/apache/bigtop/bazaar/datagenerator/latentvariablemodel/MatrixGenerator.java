@@ -15,6 +15,8 @@
  */
 package org.apache.bigtop.bazaar.datagenerator.latentvariablemodel;
 
+import org.apache.bigtop.bazaar.datagenerator.base.Vec;
+
 
 
 public class MatrixGenerator
