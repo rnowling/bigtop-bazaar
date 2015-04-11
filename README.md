@@ -1,6 +1,6 @@
 BigTop Bazaar
 =============
-A simulator for customer movement at conference.  The ultimate goal is to simulate the positions of customers over time for a conference room floor consisting of a number of boths.
+A simulator for customer dynamics at conference.  The ultimate goal is to simulate the positions of customers over time for a conference room floor consisting of a number of boths.
 
 Model Overview
 ==============
@@ -8,15 +8,10 @@ The customers are modeled as particles and the booths as static point charges.  
 
 TODO
 ====
-* Booth layout generator
 * Evaluate need for switch function with Gaussian
-* Latent factor / weights model
 * Seed CLI parameter
 * Steps CLI parameter
 * Figure out units (using OpenMM units -- need to verify)
 * Add more unit tests
-* Rename types package to base
-* Move SBC to its own file in potentials
 * Overdamp boundaries? (i.e., switching LL?)
-* Default configuration values
 
