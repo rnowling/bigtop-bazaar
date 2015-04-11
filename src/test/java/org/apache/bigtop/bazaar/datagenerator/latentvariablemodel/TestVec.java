@@ -20,7 +20,7 @@ import static org.junit.Assert.assertEquals;
 import org.junit.Test;
 
 
-public class TestVector
+public class TestVec
 {
 	static final double EPS = 1e-5;
 	
@@ -30,7 +30,7 @@ public class TestVector
 		final int rows = 10;
 		final double EXPECTED_NORM = Math.sqrt(rows * 1.0);
 		
-		Vector vec = new Vector(rows, 1.0);
+		Vec vec = new Vec(rows, 1.0);
 		
 		assertEquals("norm: ", EXPECTED_NORM, vec.norm(), EPS);
 	}
@@ -41,7 +41,7 @@ public class TestVector
 		final int rows = 10;
 		final double EXPECTED_NORM = 1.0;
 		
-		Vector vec = new Vector(rows, 1.0).normalize();
+		Vec vec = new Vec(rows, 1.0).normalize();
 		
 		assertEquals("norm: ", EXPECTED_NORM, vec.norm(), EPS);
 	}
@@ -52,7 +52,7 @@ public class TestVector
 		final int rows = 10;
 		final double EXPECTED_VALUE = 2.0;
 		
-		Vector vec = new Vector(rows, 1.0).scalarMult(2.0);
+		Vec vec = new Vec(rows, 1.0).scalarMult(2.0);
 		
 		for(int i = 0; i < vec.getLength(); i++)
 		{
@@ -67,17 +67,17 @@ public class TestVector
 		final double EXPECTED_ORTHOG_DOT = 0.0;
 		final double EXPECTED_SAME_DOT = 1.0;
 		
-		Vector vec = new Vector(rows, 0.0);
+		Vec vec = new Vec(rows, 0.0);
 		vec.setElement(0, 1.0);
 		vec.setElement(2, 1.0);
 		
-		Vector orthog = new Vector(rows, 0.0);
+		Vec orthog = new Vec(rows, 0.0);
 		vec.setElement(1, 1.0);
 	
 		double orthogDot = vec.dot(orthog);
 		assertEquals("orthog dot: ", EXPECTED_ORTHOG_DOT, orthogDot, EPS);
 		
-		Vector normVec = vec.normalize();
+		Vec normVec = vec.normalize();
 		double sameDot = normVec.dot(normVec);
 		assertEquals("same dot: ", EXPECTED_SAME_DOT, sameDot, EPS);
 		

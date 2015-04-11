@@ -26,7 +26,7 @@ public class MatrixGenerator
 		this.sampler = sampler;
 	}
 	
-	private Vector project(Vector u, Vector v)
+	private Vec project(Vec u, Vec v)
 	{
 		return u.scalarMult(u.dot(v) / u.dot(u));
 	}
@@ -34,7 +34,7 @@ public class MatrixGenerator
 	public Matrix generate(int rows, int columns)
 	{
 		Matrix matrix = new Matrix(rows, columns, 0);
-		Vector vector = new Vector(rows, 0.0);
+		Vec vector = new Vec(rows, 0.0);
 		
 		
 		int column = 0;
@@ -56,10 +56,10 @@ public class MatrixGenerator
 			}
 			
 			// modified Gram Schmidt process
-			Vector orthogVector = vector.copy();
+			Vec orthogVector = vector.copy();
 			for(int i = 0; i < column; i++)
 			{
-				Vector colVec = matrix.getColumn(i);
+				Vec colVec = matrix.getColumn(i);
 				orthogVector = orthogVector.sub(project(colVec, orthogVector));
 			}
 			

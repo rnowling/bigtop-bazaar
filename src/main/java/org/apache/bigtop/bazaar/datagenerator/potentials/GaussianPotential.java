@@ -16,15 +16,15 @@
 package org.apache.bigtop.bazaar.datagenerator.potentials;
 
 import org.apache.bigtop.bazaar.datagenerator.base.Vec2D;
-import org.apache.bigtop.bazaar.datagenerator.latentvariablemodel.Vector;
+import org.apache.bigtop.bazaar.datagenerator.latentvariablemodel.Vec;
 
 public class GaussianPotential implements Potential
 {
 	Vec2D center;
 	double variance;
-	Vector scale;
+	Vec scale;
 	
-	public GaussianPotential(Vec2D center, double radius, Vector strength)
+	public GaussianPotential(Vec2D center, double radius, Vec strength)
 	{
 		// use 3 std devs distance
 		variance = (radius / 3.0) * (radius  / 3.0);
@@ -40,7 +40,7 @@ public class GaussianPotential implements Potential
 		
 		// -1.0 b/c we want it rotated 180 degrees
 		// scale because we want to control height
-		Vector constants = scale.scalarMult(-1.0 / Math.sqrt(2.0 * Math.PI * variance));
+		Vec constants = scale.scalarMult(-1.0 / Math.sqrt(2.0 * Math.PI * variance));
 		
 		for(int i = 0; i < positions.length; i++)
 		{

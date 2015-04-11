@@ -41,7 +41,7 @@ public class TestMatrixGenerator
 		
 		for(int c = 0; c < columns; c++)
 		{
-			Vector col = randomMatrix.getColumn(c);
+			Vec col = randomMatrix.getColumn(c);
 			double norm = col.norm();
 			assertEquals("norms: ", 
 						EXPECTED_NORM, norm, EPS);
@@ -64,10 +64,10 @@ public class TestMatrixGenerator
 		
 		for(int c1 = 0; c1 < columns; c1++)
 		{
-			Vector col1 = randomMatrix.getColumn(c1);
+			Vec col1 = randomMatrix.getColumn(c1);
 			for(int c2 = 0; c2 < columns; c2++)
 			{
-				Vector col2 = randomMatrix.getColumn(c2);
+				Vec col2 = randomMatrix.getColumn(c2);
 				
 				double dot = col1.dot(col2);
 				

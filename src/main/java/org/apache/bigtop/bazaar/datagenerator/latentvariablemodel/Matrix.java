@@ -46,7 +46,7 @@ public class Matrix
 		return matrix[row][column];
 	}
 	
-	public void copyToRow(int row, Vector vector)
+	public void copyToRow(int row, Vec vector)
 	{
 		for(int i = 0; i < vector.getLength(); i++)
 		{
@@ -54,7 +54,7 @@ public class Matrix
 		}
 	}
 	
-	public void copyToColumn(int column, Vector vector)
+	public void copyToColumn(int column, Vec vector)
 	{
 		for(int i = 0; i < vector.getLength(); i++)
 		{
@@ -62,9 +62,9 @@ public class Matrix
 		}
 	}
 	
-	public Vector getColumn(int column)
+	public Vec getColumn(int column)
 	{
-		Vector vector = new Vector(rows, 0.0);
+		Vec vector = new Vec(rows, 0.0);
 		for(int i = 0; i < vector.getLength(); i++)
 		{
 			vector.setElement(i, getElement(i, column));
@@ -73,9 +73,9 @@ public class Matrix
 		return vector;
 	}
 	
-	public Vector getRow(int row)
+	public Vec getRow(int row)
 	{
-		Vector vector = new Vector(columns, 0.0);
+		Vec vector = new Vec(columns, 0.0);
 		for(int i = 0; i < vector.getLength(); i++)
 		{
 			vector.setElement(i, getElement(row, i));
@@ -105,10 +105,10 @@ public class Matrix
 		
 		for(int r = 0; r < rows; r++)
 		{
-			Vector row = getRow(r);
+			Vec row = getRow(r);
 			for(int c = 0; c < other.getColumns(); c++)
 			{
-				Vector col = other.getColumn(c);
+				Vec col = other.getColumn(c);
 				
 				result.setElement(r, c, row.dot(col));
 			}

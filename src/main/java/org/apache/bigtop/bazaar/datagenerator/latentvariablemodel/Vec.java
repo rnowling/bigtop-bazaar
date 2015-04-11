@@ -17,12 +17,12 @@ package org.apache.bigtop.bazaar.datagenerator.latentvariablemodel;
 
 import java.util.Arrays;
 
-public class Vector
+public class Vec
 {
 	int length;
 	double[] elements;
 	
-	public Vector(int length, double fillValue)
+	public Vec(int length, double fillValue)
 	{
 		this.length = length;
 		this.elements = new double[length];
@@ -39,9 +39,9 @@ public class Vector
 		return elements[idx];
 	}
 	
-	public Vector add(Vector other)
+	public Vec add(Vec other)
 	{
-		Vector vector = new Vector(length, 0.0);
+		Vec vector = new Vec(length, 0.0);
 		
 		for(int i = 0; i < length; i++)
 		{
@@ -51,9 +51,9 @@ public class Vector
 		return vector;
 	}
 	
-	public Vector sub(Vector other)
+	public Vec sub(Vec other)
 	{
-		Vector vector = new Vector(length, 0.0);
+		Vec vector = new Vec(length, 0.0);
 		
 		for(int i = 0; i < length; i++)
 		{
@@ -63,9 +63,9 @@ public class Vector
 		return vector;
 	}
 	
-	public Vector scalarMult(double scalar)
+	public Vec scalarMult(double scalar)
 	{
-		Vector vector = new Vector(length, 0.0);
+		Vec vector = new Vec(length, 0.0);
 		
 		for(int i = 0; i < length; i++)
 		{
@@ -75,7 +75,7 @@ public class Vector
 		return vector;
 	}
 	
-	public Vector normalize()
+	public Vec normalize()
 	{
 		return scalarMult(1.0 / norm());
 	}
@@ -97,9 +97,9 @@ public class Vector
 		return squaredNorm;
 	}
 	
-	public double distance(Vector other)
+	public double distance(Vec other)
 	{
-		Vector diff = this.sub(other);
+		Vec diff = this.sub(other);
 		return diff.norm();
 	}
 	
@@ -108,12 +108,12 @@ public class Vector
 		Arrays.fill(elements, value);
 	}
 	
-	public Vector copy()
+	public Vec copy()
 	{
 		return scalarMult(1.0);
 	}
 	
-	public double dot(Vector other)
+	public double dot(Vec other)
 	{
 		double dot = 0.0;
 		
@@ -128,7 +128,7 @@ public class Vector
 	@Override
 	public boolean equals(Object other)
 	{
-		Vector otherVec = (Vector) other;
+		Vec otherVec = (Vec) other;
 		
 		if(length != otherVec.length)
 		{
