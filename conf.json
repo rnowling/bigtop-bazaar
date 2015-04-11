@@ -26,7 +26,6 @@
     "recommendations" :
     {
         "latentVariables" : 10,
-        "interactionStrengthScaleFactor" : 2.0,
-        "interactionStrengthOverride" : 2.0
+        "interactionStrengthScaleFactor" : 2.0
     }
 }
