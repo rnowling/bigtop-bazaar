@@ -109,22 +109,26 @@ public class Driver
 		}
 		System.out.println();
 		
-		System.out.println("Generating latent variables");
-		LatentVariableGenerator lvmGenerator =
-				new LatentVariableGenerator(recParams, booths.size(), rng);
-		Matrix latentVariables = lvmGenerator.generate();
-		
-		System.out.println("Generating user recommendations");
-		CustomerWeightsGenerator custWeightsGenerator =
-					new CustomerWeightsGenerator(recParams, rng);
-		Matrix customerWeights = custWeightsGenerator.generate(config.getCustomers());
-		
-		Matrix recommendations = latentVariables.multiply(customerWeights)
-				.scalarMultiply(recParams.getInteractionStrengthScaleFactor());
+		Matrix recommendations;
 		
 		if(recParams.getInteractionStrengthOverride() != -1.0)
 		{
 			recommendations = new Matrix(booths.size(), config.getCustomers(), recParams.getInteractionStrengthOverride());
+		}
+		else
+		{
+			System.out.println("Generating latent variables");
+			LatentVariableGenerator lvmGenerator =
+					new LatentVariableGenerator(recParams, booths.size(), rng);
+			Matrix latentVariables = lvmGenerator.generate();
+			
+			System.out.println("Generating user recommendations");
+			CustomerWeightsGenerator custWeightsGenerator =
+						new CustomerWeightsGenerator(recParams, rng);
+			Matrix customerWeights = custWeightsGenerator.generate(config.getCustomers());
+			
+			recommendations = latentVariables.multiply(customerWeights)
+					.scalarMultiply(recParams.getInteractionStrengthScaleFactor());
 		}
 		
 		System.out.println("Simulating particles");
