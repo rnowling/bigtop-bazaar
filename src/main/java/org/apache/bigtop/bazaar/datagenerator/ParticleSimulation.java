@@ -80,7 +80,7 @@ public class ParticleSimulation
 			Vec2D boothCenter = new Vec2D(booth.getPositionX(),
 					booth.getPositionY());
 			potentials[i+1] = new GaussianPotential(boothCenter,
-					booth.getRadius(), booth.getStrength());
+					booth.getRadius(), recommendations.getRow(i));
 		}
 	}
 	

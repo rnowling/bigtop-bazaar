@@ -105,7 +105,7 @@ public class Driver
 		System.out.println();
 		for(Booth booth : booths)
 		{
-			System.out.println("Booth: " + booth.getPositionX() + " " + booth.getPositionY() + " " + booth.getStrength());
+			System.out.println("Booth: " + booth.getPositionX() + " " + booth.getPositionY());
 		}
 		System.out.println();
 		

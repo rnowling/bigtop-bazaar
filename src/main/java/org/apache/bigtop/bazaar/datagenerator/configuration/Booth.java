@@ -20,7 +20,6 @@ public class Booth
 	double positionX;
 	double positionY;
 	double radius;
-	double strength;
 	
 	public void setPositionX(double positionX)
 	{
@@ -37,10 +36,6 @@ public class Booth
 		this.radius = radius;
 	}
 
-	public void setStrength(double strength)
-	{
-		this.strength = strength;
-	}
 
 	public double getPositionX()
 	{
@@ -56,14 +51,9 @@ public class Booth
 	{
 		return radius;
 	}
-	
-	public double getStrength()
-	{
-		return strength;
-	}
-	
+
 	public String toString()
 	{
-		return "Booth: position(" + positionX + ", " + positionY + "), radius(" + radius + "), strength(" + strength + ")";
+		return "Booth: position(" + positionX + ", " + positionY + "), radius(" + radius + ")";
 	}
 }

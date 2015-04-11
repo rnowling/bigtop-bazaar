@@ -16,19 +16,20 @@
 package org.apache.bigtop.bazaar.datagenerator.potentials;
 
 import org.apache.bigtop.bazaar.datagenerator.base.Vec2D;
+import org.apache.bigtop.bazaar.datagenerator.latentvariablemodel.Vector;
 
 public class GaussianPotential implements Potential
 {
 	Vec2D center;
 	double variance;
-	double scale;
+	Vector scale;
 	
-	public GaussianPotential(Vec2D center, double radius, double strength)
+	public GaussianPotential(Vec2D center, double radius, Vector strength)
 	{
 		// use 3 std devs distance
 		variance = (radius / 3.0) * (radius  / 3.0);
 		// set height exactly to strength
-		scale = strength * Math.sqrt(2.0 * Math.PI * variance);
+		scale = strength.scalarMult(Math.sqrt(2.0 * Math.PI * variance));
 		this.center = center;
 	}
 	
@@ -39,7 +40,7 @@ public class GaussianPotential implements Potential
 		
 		// -1.0 b/c we want it rotated 180 degrees
 		// scale because we want to control height
-		double constant = -1.0 * scale / Math.sqrt(2.0 * Math.PI * variance);
+		Vector constants = scale.scalarMult(-1.0 / Math.sqrt(2.0 * Math.PI * variance));
 		
 		for(int i = 0; i < positions.length; i++)
 		{
@@ -50,9 +51,9 @@ public class GaussianPotential implements Potential
 			
 			double exp = Math.exp(-1.0 * r * r / (2.0 * variance));
 			double dexpdr = -2.0 * r / (2.0 * variance);
-			double forceScalar = constant * exp * dexpdr;
+			double forceScalar = constants.getElement(i) * exp * dexpdr;
 			Vec2D forceVector = diff.scalarMult(-1.0 * forceScalar);
-			totalEnergy += constant * exp;
+			totalEnergy += constants.getElement(i) * exp;
 			
 			forces[i] = forces[i].add(forceVector);
 		}

@@ -49,7 +49,6 @@ public class BoothGenerator
 				booth.setPositionX(x);
 				booth.setPositionY(y);
 				booth.setRadius(params.getRadii());
-				booth.setStrength(params.getStrength());
 				
 				booths.add(booth);
 			}

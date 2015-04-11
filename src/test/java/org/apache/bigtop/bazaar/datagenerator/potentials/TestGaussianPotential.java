@@ -18,6 +18,7 @@ package org.apache.bigtop.bazaar.datagenerator.potentials;
 import static org.junit.Assert.assertEquals;
 
 import org.apache.bigtop.bazaar.datagenerator.base.Vec2D;
+import org.apache.bigtop.bazaar.datagenerator.latentvariablemodel.Vector;
 import org.junit.Test;
 
 
@@ -34,7 +35,7 @@ public class TestGaussianPotential
 		
 		final double expectedPE = -1.0 * strength;
 		
-		GaussianPotential potential = new GaussianPotential(center, radius, strength);
+		GaussianPotential potential = new GaussianPotential(center, radius, new Vector(1, strength));
 		final double observedPE = potential.compute(new Vec2D[]{center},
 				new Vec2D[] {new Vec2D(0.0, 0.0)});
 		
@@ -54,7 +55,7 @@ public class TestGaussianPotential
 		
 		Vec2D[] forces = new Vec2D[] {new Vec2D(0.0, 0.0)};
 		
-		GaussianPotential potential = new GaussianPotential(center, radius, strength);
+		GaussianPotential potential = new GaussianPotential(center, radius, new Vector(1, strength));
 		potential.compute(new Vec2D[]{center}, forces);
 		final Vec2D observedForces = forces[0];
 		
