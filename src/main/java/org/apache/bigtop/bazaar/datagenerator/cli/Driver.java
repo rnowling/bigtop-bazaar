@@ -15,6 +15,7 @@
  */
 package org.apache.bigtop.bazaar.datagenerator.cli;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.Random;
 import java.util.Vector;
@@ -31,18 +32,22 @@ import org.apache.bigtop.bazaar.datagenerator.configuration.Configuration;
 import org.apache.bigtop.bazaar.datagenerator.configuration.ConfigurationReader;
 import org.apache.bigtop.bazaar.datagenerator.configuration.ParticleSimulationParameters;
 import org.apache.bigtop.bazaar.datagenerator.configuration.RecommendationsParameters;
+import org.apache.bigtop.bazaar.datagenerator.writers.BoothWriter;
+import org.apache.bigtop.bazaar.datagenerator.writers.MatrixWriter;
+import org.apache.bigtop.bazaar.datagenerator.writers.SimulationStateWriter;
 
 public class Driver
 {
 	String configFilePath;
+	String outputDir;
 	
-	static final int NARGS = 1;
+	static final int NARGS = 2;
 	
 	private void printUsage()
 	{
 		String usage = "BigTop Bazaar Data Generator\n" +
 				"\n" +
-				"Usage: java -jar bigtop-bazaar-data-generator.jar configurationFile.json\n" +
+				"Usage: java -jar bigtop-bazaar-data-generator.jar configurationFile.json outputDir\n" +
 				"\n";
 		
 		System.out.println(usage);
@@ -57,6 +62,7 @@ public class Driver
 		}
 		
 		configFilePath = args[0];
+		outputDir = args[1];
 	}
 	
 	private Configuration readConfiguration() throws IOException
@@ -66,9 +72,10 @@ public class Driver
 		return configuration;
 	}
 	
-	
-	private void runSimulation(ParticleSimulation simulation, long steps)
+	private void runSimulation(ParticleSimulation simulation, long steps) throws IOException
 	{
+		SimulationStateWriter writer = new SimulationStateWriter(outputDir + File.separator + "simulation.txt");
+		
 		for(long i = 0; i < steps; i++)
 		{
 			SimulationState state = simulation.step();
@@ -79,8 +86,12 @@ public class Driver
 						"Time: " + state.getTime() + ", " +
 						"Kinetic Energy: " + state.getKineticEnergy() + ", " +
 						"Potential Energy: " + state.getPotentialEnergy());
+				
+				writer.write(state);
 			}
 		}
+		
+		writer.close();
 	}
 	
 	private void run(String[] args) throws IOException
@@ -102,6 +113,9 @@ public class Driver
 		BoothGenerator boothGenerator = new BoothGenerator(boothParams);
 		Vector<Booth> booths = boothGenerator.generate();
 		
+		BoothWriter boothWriter = new BoothWriter(outputDir + File.separator + "booths.txt");
+		boothWriter.write(booths);
+		
 		System.out.println();
 		for(Booth booth : booths)
 		{
@@ -122,14 +136,23 @@ public class Driver
 					new LatentVariableGenerator(recParams, booths.size(), rng);
 			Matrix latentVariables = lvmGenerator.generate();
 			
+			MatrixWriter latentVariablesWriter = new MatrixWriter(outputDir + File.separator + "latent_variables.txt");
+			latentVariablesWriter.write(latentVariables);
+			
 			System.out.println("Generating user recommendations");
 			CustomerWeightsGenerator custWeightsGenerator =
 						new CustomerWeightsGenerator(recParams, rng);
 			Matrix customerWeights = custWeightsGenerator.generate(config.getCustomers());
 			
+			MatrixWriter customerWeightsWriter = new MatrixWriter(outputDir + File.separator + "customer_weights.txt");
+			customerWeightsWriter.write(customerWeights);
+			
 			recommendations = latentVariables.multiply(customerWeights)
 					.scalarMultiply(recParams.getInteractionStrengthScaleFactor());
 		}
+		
+		MatrixWriter recommendationsWriter = new MatrixWriter(outputDir + File.separator + "recommendations.txt");
+		recommendationsWriter.write(recommendations);
 		
 		System.out.println("Simulating particles");
 		ParticleSimulation simulation = new ParticleSimulation(config.getSimulationParameters(), booths, 
