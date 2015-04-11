@@ -69,7 +69,7 @@ public class SimulationState
 		this.velocities = velocities;
 	}
 	
-	public Vec2D[] getForces(int particle)
+	public Vec2D[] getForces()
 	{
 		return forces;
 	}
