@@ -131,10 +131,6 @@ public class ConfigurationReader
 			{
 				config.setNumberLatentFactors(((Double) value).intValue());
 			}
-			else if(key.equalsIgnoreCase("booths"))
-			{
-				config.setNumberBooths(((Double) value).intValue());
-			}
 			else if(key.equalsIgnoreCase("interactionStrengthScaleFactor"))
 			{
 				config.setInteractionStrengthScaleFactor((double) value);

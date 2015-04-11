@@ -17,20 +17,9 @@ package org.apache.bigtop.bazaar.datagenerator.configuration;
 
 public class RecommendationsParameters
 {
-	int numberBooths;
 	int numberLatentFactors;
 	double interactionStrengthScaleFactor;
 	double interactionStrengthOverride = -1.0;
-	
-	public int getNumberBooths()
-	{
-		return numberBooths;
-	}
-	
-	public void setNumberBooths(int numberBooths)
-	{
-		this.numberBooths = numberBooths;
-	}
 	
 	public int getNumberLatentFactors()
 	{
@@ -64,8 +53,7 @@ public class RecommendationsParameters
 
 	public String toString()
 	{
-		return "Booths: " + numberBooths + "\n" +
-				"LatentFactors: " + numberLatentFactors + "\n" +
+		return "LatentFactors: " + numberLatentFactors + "\n" +
 				"InteractionStrengthScaledFactor: " + interactionStrengthScaleFactor + "\n" +
 				"InteractionStrengthOverride: " + interactionStrengthOverride + "\n";
 	}
