@@ -24,7 +24,7 @@ import org.apache.bigtop.bazaar.datagenerator.base.Vec;
 import org.junit.Test;
 
 
-public class TestMatrixGenerator
+public class TestRandomSpaceGenerator
 {
 	static final double EPS = 1e-5;
 	
@@ -33,7 +33,7 @@ public class TestMatrixGenerator
 	{
 		Random rng = new Random();
 		Sampler<Double> sampler = new BoundedBiGaussianMixtureSampler(0.0, 1.0, 0.25, 0.75, 0.1, 0.9, 0.2, rng);
-		MatrixGenerator generator = new MatrixGenerator(sampler);
+		RandomSpaceGenerator generator = new RandomSpaceGenerator(sampler);
 		
 		final int rows = 10;
 		final int columns = 5;
@@ -55,7 +55,7 @@ public class TestMatrixGenerator
 	{
 		Random rng = new Random();
 		Sampler<Double> sampler = new BoundedBiGaussianMixtureSampler(0.0, 1.0, 0.25, 0.75, 0.1, 0.9, 0.2, rng);
-		MatrixGenerator generator = new MatrixGenerator(sampler);
+		RandomSpaceGenerator generator = new RandomSpaceGenerator(sampler);
 		
 		final int rows = 10;
 		final int columns = 5;

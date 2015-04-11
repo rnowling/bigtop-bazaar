@@ -20,19 +20,19 @@ import java.util.Random;
 import org.apache.bigtop.bazaar.datagenerator.base.Matrix;
 import org.apache.bigtop.bazaar.datagenerator.configuration.RecommendationsParameters;
 import org.apache.bigtop.bazaar.datagenerator.latentvariablemodel.BoundedBiGaussianMixtureSampler;
-import org.apache.bigtop.bazaar.datagenerator.latentvariablemodel.MatrixGenerator;
+import org.apache.bigtop.bazaar.datagenerator.latentvariablemodel.RandomSpaceGenerator;
 import org.apache.bigtop.bazaar.datagenerator.latentvariablemodel.Sampler;
 
 public class CustomerWeightsGenerator
 {
-	MatrixGenerator generator;
+	RandomSpaceGenerator generator;
 	RecommendationsParameters params;
 	
 	public CustomerWeightsGenerator(RecommendationsParameters params, Random rng)
 	{
 		this.params = params;
 		Sampler<Double> sampler = new BoundedBiGaussianMixtureSampler(0.0, 1.0, 0.25, 0.75, 0.1, 0.9, 0.2, rng);
-		generator = new MatrixGenerator(sampler);
+		generator = new RandomSpaceGenerator(sampler);
 	}
 	
 	public Matrix generate(int customers)

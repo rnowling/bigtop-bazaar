@@ -20,11 +20,11 @@ import org.apache.bigtop.bazaar.datagenerator.base.Vec;
 
 
 
-public class MatrixGenerator
+public class RandomSpaceGenerator
 {
 	Sampler<Double> sampler;
 	
-	public MatrixGenerator(Sampler<Double> sampler)
+	public RandomSpaceGenerator(Sampler<Double> sampler)
 	{
 		this.sampler = sampler;
 	}
