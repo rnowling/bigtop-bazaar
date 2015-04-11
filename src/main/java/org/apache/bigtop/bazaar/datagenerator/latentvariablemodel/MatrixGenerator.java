@@ -15,6 +15,7 @@
  */
 package org.apache.bigtop.bazaar.datagenerator.latentvariablemodel;
 
+import org.apache.bigtop.bazaar.datagenerator.base.Matrix;
 import org.apache.bigtop.bazaar.datagenerator.base.Vec;
 
 

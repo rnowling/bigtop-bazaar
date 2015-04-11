@@ -17,9 +17,9 @@ package org.apache.bigtop.bazaar.datagenerator;
 
 import java.util.Random;
 
+import org.apache.bigtop.bazaar.datagenerator.base.Matrix;
 import org.apache.bigtop.bazaar.datagenerator.configuration.RecommendationsParameters;
 import org.apache.bigtop.bazaar.datagenerator.latentvariablemodel.BoundedBiGaussianMixtureSampler;
-import org.apache.bigtop.bazaar.datagenerator.latentvariablemodel.Matrix;
 import org.apache.bigtop.bazaar.datagenerator.latentvariablemodel.MatrixGenerator;
 import org.apache.bigtop.bazaar.datagenerator.latentvariablemodel.Sampler;
 

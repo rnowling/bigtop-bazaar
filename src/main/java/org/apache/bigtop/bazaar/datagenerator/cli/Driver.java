@@ -23,6 +23,7 @@ import org.apache.bigtop.bazaar.datagenerator.BoothGenerator;
 import org.apache.bigtop.bazaar.datagenerator.CustomerWeightsGenerator;
 import org.apache.bigtop.bazaar.datagenerator.LatentVariableGenerator;
 import org.apache.bigtop.bazaar.datagenerator.ParticleSimulation;
+import org.apache.bigtop.bazaar.datagenerator.base.Matrix;
 import org.apache.bigtop.bazaar.datagenerator.base.SimulationState;
 import org.apache.bigtop.bazaar.datagenerator.configuration.Booth;
 import org.apache.bigtop.bazaar.datagenerator.configuration.BoothParameters;
@@ -30,7 +31,6 @@ import org.apache.bigtop.bazaar.datagenerator.configuration.Configuration;
 import org.apache.bigtop.bazaar.datagenerator.configuration.ConfigurationReader;
 import org.apache.bigtop.bazaar.datagenerator.configuration.ParticleSimulationParameters;
 import org.apache.bigtop.bazaar.datagenerator.configuration.RecommendationsParameters;
-import org.apache.bigtop.bazaar.datagenerator.latentvariablemodel.Matrix;
 
 public class Driver
 {

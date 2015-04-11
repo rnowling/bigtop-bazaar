@@ -19,6 +19,7 @@ import java.util.Arrays;
 import java.util.Random;
 import java.util.Vector;
 
+import org.apache.bigtop.bazaar.datagenerator.base.Matrix;
 import org.apache.bigtop.bazaar.datagenerator.base.SimulationState;
 import org.apache.bigtop.bazaar.datagenerator.base.Vec2D;
 import org.apache.bigtop.bazaar.datagenerator.base.VelocitySampler;
@@ -26,7 +27,6 @@ import org.apache.bigtop.bazaar.datagenerator.configuration.Booth;
 import org.apache.bigtop.bazaar.datagenerator.configuration.ParticleSimulationParameters;
 import org.apache.bigtop.bazaar.datagenerator.integrators.Integrator;
 import org.apache.bigtop.bazaar.datagenerator.integrators.LangevinLeapfrogIntegrator;
-import org.apache.bigtop.bazaar.datagenerator.latentvariablemodel.Matrix;
 import org.apache.bigtop.bazaar.datagenerator.potentials.GaussianPotential;
 import org.apache.bigtop.bazaar.datagenerator.potentials.Potential;
 import org.apache.bigtop.bazaar.datagenerator.potentials.SphericalBoundaryConditions;
